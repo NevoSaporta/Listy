@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Listy</string>
+    <string name="hello_world_string">Hello World!</string>
 </resources>
