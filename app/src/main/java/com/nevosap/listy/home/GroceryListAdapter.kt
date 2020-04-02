@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.nevosap.listy.R
+import com.nevosap.listy.databinding.ListItemGroceryListBinding
 import com.nevosap.listy.model.GroceryListModel
 
 class GroceryListAdapter(context: Context):ListAdapter<GroceryListModel,GroceryListAdapter.ViewHolder>(GroceryListDiffCallback()) {
@@ -16,18 +17,20 @@ class GroceryListAdapter(context: Context):ListAdapter<GroceryListModel,GroceryL
         .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        //TODO : inflate the right layout
-        val view = layoutInflater.inflate(R.layout.activity_main,parent,false)
-        return  ViewHolder(view)
+        val view = layoutInflater.inflate(R.layout.list_item_grocery_list,parent,false)
+        return  ViewHolder(view,parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class ViewHolder(view: View):RecyclerView.ViewHolder(view){
+    inner class ViewHolder(view: View, parent: ViewGroup):RecyclerView.ViewHolder(view){
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ListItemGroceryListBinding.inflate(layoutInflater,parent,false)
         fun bind(groceryListModel: GroceryListModel){
-            //TODO: Binding
+            binding.groceryList =groceryListModel
+            binding.executePendingBindings()
         }
     }
 
