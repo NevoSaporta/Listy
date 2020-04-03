@@ -9,8 +9,9 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-@BindingAdapter("listCreatedDateFormatted")
-fun TextView.listCreatedDateFormatted(groceryListModel: GroceryListModel){
-    val formatter = DateFormat.getDateInstance(DateFormat.LONG, Locale.ENGLISH)
-    text = resources.getString(R.string.list_item_date_format,formatter.format(groceryListModel).toString())
-}
+//TODO: fix date issues
+//@BindingAdapter("listCreatedDateFormatted")
+//fun TextView.listCreatedDateFormatted(groceryListModel: GroceryListModel){
+//    val formatter = DateFormat.getDateInstance(DateFormat.LONG, Locale.ENGLISH)
+//    text = resources.getString(R.string.list_item_date_format,formatter.format(groceryListModel).toString())
+//}
