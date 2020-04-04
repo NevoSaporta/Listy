@@ -12,11 +12,18 @@ import com.nevosap.listy.model.GroceryListModel
 
 class ListDetailsFragment:Fragment() {
     private lateinit var groceryList :GroceryListModel
+    companion object{
+        const val GROCERYLISTMODEL ="groceryListModel"
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         val binding: FragmentDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details,container,false)
+        //getting the groceryListModel from safe args
+        val groceryListModel = arguments?.getParcelable<GroceryListModel>(GROCERYLISTMODEL)
+        binding.groceryList =groceryListModel
         return binding.root
+
     }
 }

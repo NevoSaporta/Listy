@@ -39,7 +39,7 @@ class HomeFragment:Fragment() {
                 id = 1,
                 name = "List1",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -51,7 +51,7 @@ class HomeFragment:Fragment() {
                 id = 2,
                 name = "List2",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -63,7 +63,7 @@ class HomeFragment:Fragment() {
                 id = 3,
                 name = "List3",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -75,7 +75,7 @@ class HomeFragment:Fragment() {
                 id = 4,
                 name = "List4",
                 creationDate =Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -87,7 +87,7 @@ class HomeFragment:Fragment() {
                 id = 5,
                 name = "List5",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -99,7 +99,7 @@ class HomeFragment:Fragment() {
                 id = 6,
                 name = "List6",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -111,7 +111,7 @@ class HomeFragment:Fragment() {
                 id = 7,
                 name = "List7",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -123,7 +123,7 @@ class HomeFragment:Fragment() {
                 id = 8,
                 name = "List8",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -135,7 +135,7 @@ class HomeFragment:Fragment() {
                 id = 8,
                 name = "List8",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -147,7 +147,7 @@ class HomeFragment:Fragment() {
                 id = 9,
                 name = "List9",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -159,7 +159,7 @@ class HomeFragment:Fragment() {
                 id = 10,
                 name = "List10",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -171,7 +171,7 @@ class HomeFragment:Fragment() {
                 id = 11,
                 name = "List11",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -183,7 +183,7 @@ class HomeFragment:Fragment() {
                 id = 12,
                 name = "List12",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items =mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -195,7 +195,7 @@ class HomeFragment:Fragment() {
                 id = 13,
                 name = "List13",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
@@ -207,7 +207,7 @@ class HomeFragment:Fragment() {
                 id = 14,
                 name = "List14",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
+                items = mutableListOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
