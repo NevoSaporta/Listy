@@ -37,8 +37,8 @@ class HomeFragment:Fragment() {
         return listOf(
             GroceryListModel(
                 id = 1,
-                name = "bobo",
-                creationDate = Date(22, 3, 1998),
+                name = "List1",
+                creationDate = Date(System.currentTimeMillis()),
                 items = listOf<GroceryItemModel>(
                     GroceryItemModel(
                         name = "asdasd",
@@ -48,9 +48,9 @@ class HomeFragment:Fragment() {
                 )
 
             ),   GroceryListModel(
-                id = 1,
-                name = "bobo",
-                creationDate = Date(22, 3, 1998),
+                id = 2,
+                name = "List2",
+                creationDate = Date(System.currentTimeMillis()),
                 items = listOf<GroceryItemModel>(
                     GroceryItemModel(
                         name = "asdasd",
@@ -60,9 +60,9 @@ class HomeFragment:Fragment() {
                 )
 
             ),   GroceryListModel(
-                id = 1,
-                name = "bobo",
-                creationDate = Date(22, 3, 1998),
+                id = 3,
+                name = "List3",
+                creationDate = Date(System.currentTimeMillis()),
                 items = listOf<GroceryItemModel>(
                     GroceryItemModel(
                         name = "asdasd",
@@ -72,9 +72,9 @@ class HomeFragment:Fragment() {
                 )
 
             ),   GroceryListModel(
-                id = 1,
-                name = "bobo",
-                creationDate = Date(22, 3, 1998),
+                id = 4,
+                name = "List4",
+                creationDate =Date(System.currentTimeMillis()),
                 items = listOf<GroceryItemModel>(
                     GroceryItemModel(
                         name = "asdasd",
@@ -84,9 +84,129 @@ class HomeFragment:Fragment() {
                 )
 
             ),   GroceryListModel(
-                id = 1,
-                name = "bobo",
-                creationDate = Date(22, 3, 1998),
+                id = 5,
+                name = "List5",
+                creationDate = Date(System.currentTimeMillis()),
+                items = listOf<GroceryItemModel>(
+                    GroceryItemModel(
+                        name = "asdasd",
+                        id = 1,
+                        price = 1.1
+                    )
+                )
+
+            ),   GroceryListModel(
+                id = 6,
+                name = "List6",
+                creationDate = Date(System.currentTimeMillis()),
+                items = listOf<GroceryItemModel>(
+                    GroceryItemModel(
+                        name = "asdasd",
+                        id = 1,
+                        price = 1.1
+                    )
+                )
+
+            ),   GroceryListModel(
+                id = 7,
+                name = "List7",
+                creationDate = Date(System.currentTimeMillis()),
+                items = listOf<GroceryItemModel>(
+                    GroceryItemModel(
+                        name = "asdasd",
+                        id = 1,
+                        price = 1.1
+                    )
+                )
+
+            ),   GroceryListModel(
+                id = 8,
+                name = "List8",
+                creationDate = Date(System.currentTimeMillis()),
+                items = listOf<GroceryItemModel>(
+                    GroceryItemModel(
+                        name = "asdasd",
+                        id = 1,
+                        price = 1.1
+                    )
+                )
+
+            ),   GroceryListModel(
+                id = 8,
+                name = "List8",
+                creationDate = Date(System.currentTimeMillis()),
+                items = listOf<GroceryItemModel>(
+                    GroceryItemModel(
+                        name = "asdasd",
+                        id = 1,
+                        price = 1.1
+                    )
+                )
+
+            ),   GroceryListModel(
+                id = 9,
+                name = "List9",
+                creationDate = Date(System.currentTimeMillis()),
+                items = listOf<GroceryItemModel>(
+                    GroceryItemModel(
+                        name = "asdasd",
+                        id = 1,
+                        price = 1.1
+                    )
+                )
+
+            ),   GroceryListModel(
+                id = 10,
+                name = "List10",
+                creationDate = Date(System.currentTimeMillis()),
+                items = listOf<GroceryItemModel>(
+                    GroceryItemModel(
+                        name = "asdasd",
+                        id = 1,
+                        price = 1.1
+                    )
+                )
+
+            ),   GroceryListModel(
+                id = 11,
+                name = "List11",
+                creationDate = Date(System.currentTimeMillis()),
+                items = listOf<GroceryItemModel>(
+                    GroceryItemModel(
+                        name = "asdasd",
+                        id = 1,
+                        price = 1.1
+                    )
+                )
+
+            ),   GroceryListModel(
+                id = 12,
+                name = "List12",
+                creationDate = Date(System.currentTimeMillis()),
+                items = listOf<GroceryItemModel>(
+                    GroceryItemModel(
+                        name = "asdasd",
+                        id = 1,
+                        price = 1.1
+                    )
+                )
+
+            ),   GroceryListModel(
+                id = 13,
+                name = "List13",
+                creationDate = Date(System.currentTimeMillis()),
+                items = listOf<GroceryItemModel>(
+                    GroceryItemModel(
+                        name = "asdasd",
+                        id = 1,
+                        price = 1.1
+                    )
+                )
+
+            ),   GroceryListModel(
+                id = 14,
+                name = "List14",
+                creationDate = Date(System.currentTimeMillis()),
                 items = listOf<GroceryItemModel>(
                     GroceryItemModel(
                         name = "asdasd",
