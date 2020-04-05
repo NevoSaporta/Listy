@@ -26,7 +26,7 @@ class HomeFragment:Fragment() {
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,container,false)
 
         val adapter = GroceryListAdapter(GroceryListClickListener {
-            Toast.makeText(context,"hey",Toast.LENGTH_LONG).show()
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToListDetailsFragment(it))
         },context!!)
 
         binding.homeRcv.layoutManager = LinearLayoutManager(context)
