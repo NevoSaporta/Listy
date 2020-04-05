@@ -11,7 +11,7 @@ import com.nevosap.listy.R
 import com.nevosap.listy.databinding.ListItemGroceryListBinding
 import com.nevosap.listy.model.GroceryListModel
 
-class GroceryListAdapter(context: Context):ListAdapter<GroceryListModel,GroceryListAdapter.ViewHolder>(GroceryListDiffCallback()) {
+class GroceryListAdapter(private val clickListener: GroceryListClickListener ,context: Context):ListAdapter<GroceryListModel,GroceryListAdapter.ViewHolder>(GroceryListDiffCallback()) {
 
     private val layoutInflater: LayoutInflater = context
         .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -22,12 +22,14 @@ class GroceryListAdapter(context: Context):ListAdapter<GroceryListModel,GroceryL
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position),clickListener)
     }
 
     inner class ViewHolder(private val binding: ListItemGroceryListBinding ):RecyclerView.ViewHolder(binding.root){
-        fun bind(groceryListModel: GroceryListModel){
+        fun bind(groceryListModel: GroceryListModel,clickListener: GroceryListClickListener){
+            //setting the binding variables
             binding.groceryList =groceryListModel
+            binding.clickListener =clickListener
             binding.executePendingBindings()
         }
     }
