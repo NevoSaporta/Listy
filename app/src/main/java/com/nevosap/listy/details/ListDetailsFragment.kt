@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentDetailsBinding
 import com.nevosap.listy.model.GroceryListModel
 
 class ListDetailsFragment:Fragment() {
-    private lateinit var groceryList :GroceryListModel
+    private lateinit var groceryListModel :GroceryListModel
     //safe argument's name
     companion object{
         const val GROCERYLISTMODEL ="groceryListModel"
@@ -22,11 +23,15 @@ class ListDetailsFragment:Fragment() {
         savedInstanceState: Bundle?): View? {
         val binding: FragmentDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details,container,false)
         //getting the groceryListModel from safe args
-        val groceryListModel = arguments?.getParcelable<GroceryListModel>(GROCERYLISTMODEL)
-        groceryListModel?.let {
-            groceryList = it
-            binding.groceryList =it
-        }
+        groceryListModel = arguments?.getParcelable(GROCERYLISTMODEL)!!
+        binding.groceryList =groceryListModel
+
+
+        val adapter = GroceryItemAdapter(context!!)
+        binding.detailsRcv.layoutManager = LinearLayoutManager(context)
+        binding.detailsRcv.adapter =adapter
+        adapter.submitList(groceryListModel.items)
+        adapter.notifyDataSetChanged()
         return binding.root
 
     }

@@ -4,12 +4,15 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.ListItemGroceryItemBinding
 import com.nevosap.listy.model.GroceryItemModel
+import com.nevosap.listy.model.GroceryItemOrderModel
 
-class GroceryItemAdapter(private val data: MutableMap<GroceryItemModel,Int>, context: Context):RecyclerView.Adapter<GroceryItemAdapter.ViewHolder>() {
+class GroceryItemAdapter(context: Context):ListAdapter<GroceryItemOrderModel,GroceryItemAdapter.ViewHolder>(GroceryListDiffCallback()){
 
     private val layoutInflater: LayoutInflater = context
         .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -19,16 +22,20 @@ class GroceryItemAdapter(private val data: MutableMap<GroceryItemModel,Int>, con
         return ViewHolder(binding)
     }
 
-    override fun getItemCount()= data.count()
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-      //TODO: Change model
+        holder.bind(getItem(position))
     }
     inner class ViewHolder(private val binding: ListItemGroceryItemBinding):RecyclerView.ViewHolder(binding.root){
-        fun bind(groceryItemModel: GroceryItemModel, quantity:Int){
-            binding.groceryListItem =groceryItemModel
-            binding.quantity =quantity
+        fun bind(groceryItemOrderModel: GroceryItemOrderModel){
+            binding.groceryListOrder =groceryItemOrderModel
             binding.executePendingBindings()
         }
+    }
+    class GroceryListDiffCallback: DiffUtil.ItemCallback<GroceryItemOrderModel>(){
+
+        override fun areItemsTheSame(oldItem: GroceryItemOrderModel, newItem: GroceryItemOrderModel)= oldItem.id ==newItem.id
+
+        override fun areContentsTheSame(oldItem: GroceryItemOrderModel, newItem: GroceryItemOrderModel)=
+            oldItem == newItem
     }
 }

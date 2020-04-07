@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentHomeBinding
 import com.nevosap.listy.model.GroceryItemModel
+import com.nevosap.listy.model.GroceryItemOrderModel
 import com.nevosap.listy.model.GroceryListModel
 import java.util.*
 
@@ -40,113 +41,88 @@ class HomeFragment:Fragment() {
                 id = 1,
                 name = "List1",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableMapOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    ) to 1
-                )
-
-            )
-            ,   GroceryListModel(
-                id = 3,
-                name = "List3",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableMapOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    ) to 1
-                )
-            ),   GroceryListModel(
-                id = 3,
-                name = "List3",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableMapOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    ) to 1
-                )
-            ),   GroceryListModel(
-                id = 3,
-                name = "List7",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableMapOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    ) to 1
-                )
-            ),   GroceryListModel(
-                id = 45,
-                name = "List5",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableMapOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    ) to 1
-                )
-            ),   GroceryListModel(
-                id = 45,
-                name = "List52",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableMapOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    ) to 1
-                )
-            ),   GroceryListModel(
-                id = 45,
-                name = "List5111",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableMapOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    ) to 1
-                )
-            ),   GroceryListModel(
-                id = 45,
-                name = "List544",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableMapOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    ) to 1
-                )
-            ),   GroceryListModel(
-                id = 45,
-                name = "List59",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableMapOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    ) to 1
-                )
-            ),   GroceryListModel(
-                id = 45,
-                name = "List85",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableMapOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    ) to 1
+                items = mutableListOf(
+                    GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Socks",
+                            id = 1,
+                            price = 1.1
+                        ),1
+                    ),
+                    GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Cookie",
+                            id = 1,
+                            price = 1.1
+                        ),2
+                    ),
+                    GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Koala",
+                            id = 1,
+                            price = 1.1
+                        ),36
+                    ) ,  GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Socks",
+                            id = 1,
+                            price = 1.1
+                        ),1
+                    ),
+                    GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Cookie",
+                            id = 1,
+                            price = 1.1
+                        ),2
+                    ),
+                    GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Koala",
+                            id = 1,
+                            price = 1.1
+                        ),36
+                    ), GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Socks",
+                            id = 1,
+                            price = 1.1
+                        ),1
+                    ),
+                    GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Cookie",
+                            id = 1,
+                            price = 1.1
+                        ),2
+                    ),
+                    GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Koala",
+                            id = 1,
+                            price = 1.1
+                        ),36
+                    ) ,  GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Socks",
+                            id = 1,
+                            price = 1.1
+                        ),1
+                    ),
+                    GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Cookie",
+                            id = 1,
+                            price = 1.1
+                        ),2
+                    ),
+                    GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Koala",
+                            id = 1,
+                            price = 1.1
+                        ),36
+                    )
                 )
             )
         )

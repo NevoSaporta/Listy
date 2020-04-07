@@ -28,6 +28,7 @@
             android:layout_marginEnd="@dimen/small_margin"
             app:listCreatedDateFormatted="@{groceryList}"/>
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/details_rcv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/recycler_view_height"
             app:layout_constraintBottom_toBottomOf="parent"
