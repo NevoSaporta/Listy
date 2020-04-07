@@ -6,5 +6,17 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.nevosap.listy.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_listDetailsFragment"
+            app:destination="@id/listDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listDetailsFragment"
+        android:name="com.nevosap.listy.details.ListDetailsFragment"
+        android:label="ListDetailsFragment" >
+        <argument
+            android:name="groceryListModel"
+            app:argType="com.nevosap.listy.model.GroceryListModel" />
+    </fragment>
 </navigation>
