@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentHomeBinding
 import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryListModel
-import java.time.LocalDateTime
 import java.util.*
 
 class HomeFragment:Fragment() {
@@ -43,182 +40,114 @@ class HomeFragment:Fragment() {
                 id = 1,
                 name = "List1",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
+                items = mutableMapOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
                         price = 1.1
-                    )
+                    ) to 1
                 )
 
-            ),   GroceryListModel(
-                id = 2,
-                name = "List2",
+            )
+            ,   GroceryListModel(
+                id = 3,
+                name = "List3",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
+                items = mutableMapOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
                         price = 1.1
-                    )
+                    ) to 1
                 )
-
             ),   GroceryListModel(
                 id = 3,
                 name = "List3",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
+                items = mutableMapOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
                         price = 1.1
-                    )
+                    ) to 1
                 )
-
             ),   GroceryListModel(
-                id = 4,
-                name = "List4",
-                creationDate =Date(System.currentTimeMillis()),
-                items = mutableListOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 5,
-                name = "List5",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 6,
-                name = "List6",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 7,
+                id = 3,
                 name = "List7",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
+                items = mutableMapOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
                         price = 1.1
-                    )
+                    ) to 1
                 )
-
             ),   GroceryListModel(
-                id = 8,
-                name = "List8",
+                id = 45,
+                name = "List5",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
+                items = mutableMapOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
                         price = 1.1
-                    )
+                    ) to 1
                 )
-
             ),   GroceryListModel(
-                id = 8,
-                name = "List8",
+                id = 45,
+                name = "List52",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
+                items = mutableMapOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
                         price = 1.1
-                    )
+                    ) to 1
                 )
-
             ),   GroceryListModel(
-                id = 9,
-                name = "List9",
+                id = 45,
+                name = "List5111",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
+                items = mutableMapOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
                         price = 1.1
-                    )
+                    ) to 1
                 )
-
             ),   GroceryListModel(
-                id = 10,
-                name = "List10",
+                id = 45,
+                name = "List544",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
+                items = mutableMapOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
                         price = 1.1
-                    )
+                    ) to 1
                 )
-
             ),   GroceryListModel(
-                id = 11,
-                name = "List11",
+                id = 45,
+                name = "List59",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
+                items = mutableMapOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
                         price = 1.1
-                    )
+                    ) to 1
                 )
-
             ),   GroceryListModel(
-                id = 12,
-                name = "List12",
+                id = 45,
+                name = "List85",
                 creationDate = Date(System.currentTimeMillis()),
-                items =mutableListOf(
+                items = mutableMapOf(
                     GroceryItemModel(
                         name = "asdasd",
                         id = 1,
                         price = 1.1
-                    )
+                    ) to 1
                 )
-
-            ),   GroceryListModel(
-                id = 13,
-                name = "List13",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 14,
-                name = "List14",
-                creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
             )
         )
     }
