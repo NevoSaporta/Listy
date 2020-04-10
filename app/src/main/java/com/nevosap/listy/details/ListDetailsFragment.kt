@@ -26,13 +26,16 @@ class ListDetailsFragment:Fragment() {
         groceryListModel = arguments?.getParcelable(GROCERYLISTMODEL)!!
         binding.groceryList =groceryListModel
 
-
-        val adapter = GroceryItemAdapter(context!!)
-        binding.detailsRcv.layoutManager = LinearLayoutManager(context)
-        binding.detailsRcv.adapter =adapter
-        adapter.submitList(groceryListModel.items)
-        adapter.notifyDataSetChanged()
+        initRecyclerView(binding)
         return binding.root
 
+    }
+
+    private fun initRecyclerView(binding: FragmentDetailsBinding) {
+        val adapter = GroceryItemAdapter(context!!)
+        binding.detailsRcv.layoutManager = LinearLayoutManager(context)
+        binding.detailsRcv.adapter = adapter
+        adapter.submitList(groceryListModel.items)
+        adapter.notifyDataSetChanged()
     }
 }

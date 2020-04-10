@@ -22,17 +22,24 @@ class HomeFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,container,false)
+        initRecyclerView(binding)
+        return binding.root
+    }
 
+    private fun initRecyclerView(binding: FragmentHomeBinding) {
+        //Navigating to Details Fragment when item is pressed
         val adapter = GroceryListAdapter(GroceryListClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToListDetailsFragment(it))
-        },context!!)
-
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToListDetailsFragment(
+                    it
+                )
+            )
+        }, context!!)
         binding.homeRcv.layoutManager = LinearLayoutManager(context)
-        binding.homeRcv.adapter =adapter
-        val tmpList : List<GroceryListModel> = getTempList()
+        binding.homeRcv.adapter = adapter
+        val tmpList: List<GroceryListModel> = getTempList()
         adapter.submitList(tmpList)
         adapter.notifyDataSetChanged()
-        return binding.root
     }
 
     private fun getTempList(): List<GroceryListModel> {
