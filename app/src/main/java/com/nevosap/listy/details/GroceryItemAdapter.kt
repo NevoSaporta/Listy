@@ -12,7 +12,7 @@ import com.nevosap.listy.databinding.ListItemGroceryItemBinding
 import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryItemOrderModel
 
-class GroceryItemAdapter(context: Context):ListAdapter<GroceryItemOrderModel,GroceryItemAdapter.ViewHolder>(GroceryListDiffCallback()){
+class GroceryItemAdapter(context: Context):ListAdapter<GroceryItemOrderModel,GroceryItemAdapter.ViewHolder>(GroceryItemsDiffCallback()){
 
     private val layoutInflater: LayoutInflater = context
         .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -31,7 +31,7 @@ class GroceryItemAdapter(context: Context):ListAdapter<GroceryItemOrderModel,Gro
             binding.executePendingBindings()
         }
     }
-    class GroceryListDiffCallback: DiffUtil.ItemCallback<GroceryItemOrderModel>(){
+    class GroceryItemsDiffCallback: DiffUtil.ItemCallback<GroceryItemOrderModel>(){
 
         override fun areItemsTheSame(oldItem: GroceryItemOrderModel, newItem: GroceryItemOrderModel)= oldItem.id ==newItem.id
 
