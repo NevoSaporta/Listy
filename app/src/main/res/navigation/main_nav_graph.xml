@@ -10,6 +10,9 @@
         <action
             android:id="@+id/action_homeFragment_to_listDetailsFragment"
             app:destination="@id/listDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addEditFragment"
+            app:destination="@id/addEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/listDetailsFragment"
