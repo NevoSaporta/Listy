@@ -6,4 +6,5 @@
     <string name="list_name_edit_hint">Enter a list name</string>
     <string name="cancel_edit_button">Cancel</string>
     <string name="save_edit_button">Save</string>
+    <string name="edit_menu_item">Edit</string>
 </resources>

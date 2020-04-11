@@ -51,27 +51,27 @@ class HomeFragment:Fragment() {
                 id = 1,
                 name = "List1",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
+                orders = mutableListOf(
                     GroceryItemOrderModel(1,
                         GroceryItemModel(
-                            name = "Cookie",
+                            name = "Milk",
                             id = 1,
                             price = 1.1
                         ),2
                     ),
-                    GroceryItemOrderModel(1,
+                    GroceryItemOrderModel(2,
                         GroceryItemModel(
-                            name = "Koala",
+                            name = "Meat",
                             id = 2,
                             price = 1.1
                         ),36
-                    ) ,  GroceryItemOrderModel(1,
+                    ) /*,  GroceryItemOrderModel(1,
                         GroceryItemModel(
-                            name = "Socks",
+                            name = "Water",
                             id = 3,
                             price = 1.1
                         ),1
-                    )
+                    )*/
                 )
             )
         )

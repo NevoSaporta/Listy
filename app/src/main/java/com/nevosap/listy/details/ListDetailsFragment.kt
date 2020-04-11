@@ -1,11 +1,10 @@
 package com.nevosap.listy.details
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentDetailsBinding
@@ -25,17 +24,33 @@ class ListDetailsFragment:Fragment() {
         //getting the groceryListModel from safe args
         groceryListModel = arguments?.getParcelable(GROCERYLISTMODEL)!!
         binding.groceryList =groceryListModel
-
+        setHasOptionsMenu(true)
         initRecyclerView(binding)
         return binding.root
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.details_menu,menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.edit_menu_item  ->{
+                //Navigating to edit fragment
+                findNavController().navigate(ListDetailsFragmentDirections.actionListDetailsFragmentToAddEditFragment(groceryListModel))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun initRecyclerView(binding: FragmentDetailsBinding) {
         val adapter = GroceryItemAdapter(context!!)
         binding.detailsRcv.layoutManager = LinearLayoutManager(context)
         binding.detailsRcv.adapter = adapter
-        adapter.submitList(groceryListModel.items)
+        adapter.submitList(groceryListModel.orders)
         adapter.notifyDataSetChanged()
     }
 }

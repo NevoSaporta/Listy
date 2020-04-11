@@ -1,7 +1,6 @@
 package com.nevosap.listy.edit
 
 import android.content.Context
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,9 +30,10 @@ class EditListAdapter(context: Context,val groceryListData:GroceryListModel?):Li
 
     inner class ViewHolder(private val binding: ListItemGroceryEditBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(groceryItemModel: GroceryItemModel){
-            groceryListData?.let { groceryListModel ->
-                for (order in groceryListModel.items){
-                    if(order.item.id ==groceryItemModel.id){
+            //loading data from safe args to rcv
+            groceryListData?.let {
+                for (order in it.orders){
+                    if(groceryItemModel.id==order.item.id){
                         binding.itemQuantity.text = order.quantity.toString()
                         binding.itemQuantity.visibility = View.VISIBLE
                         binding.itemSelected.isChecked = true

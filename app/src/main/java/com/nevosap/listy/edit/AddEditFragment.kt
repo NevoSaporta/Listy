@@ -24,12 +24,11 @@ class AddEditFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding: FragmentEditBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_edit,container,false)
-        initRecyclerView(binding)
         groceryListModel = arguments?.getParcelable(GROCERYLISTMODEL)
-
         groceryListModel?.let {
             binding.editListName.setText( it.name)
         }
+        initRecyclerView(binding)
         return binding.root
     }
     private fun initRecyclerView(binding: FragmentEditBinding) {
