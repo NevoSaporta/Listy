@@ -15,7 +15,6 @@ import com.nevosap.listy.model.GroceryListModel
 
 class AddEditFragment:Fragment() {
     private  var groceryListModel: GroceryListModel? = null
-    private  var items: MutableList<GroceryItemOrderModel>? = null
     companion object{
         const val GROCERYLISTMODEL ="groceryListModel"
     }
@@ -27,13 +26,14 @@ class AddEditFragment:Fragment() {
         val binding: FragmentEditBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_edit,container,false)
         initRecyclerView(binding)
         groceryListModel = arguments?.getParcelable(GROCERYLISTMODEL)
+
         groceryListModel?.let {
-            items = it.items
+            binding.editListName.setText( it.name)
         }
         return binding.root
     }
     private fun initRecyclerView(binding: FragmentEditBinding) {
-        val adapter = EditListAdapter(context!!)
+        val adapter = EditListAdapter(context!!,groceryListModel)
         binding.editRcv.layoutManager = LinearLayoutManager(context)
         binding.editRcv.adapter = adapter
         adapter.submitList(getTmpList())
