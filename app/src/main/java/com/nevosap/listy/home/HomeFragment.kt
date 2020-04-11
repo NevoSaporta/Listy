@@ -51,13 +51,6 @@ class HomeFragment:Fragment() {
                 items = mutableListOf(
                     GroceryItemOrderModel(1,
                         GroceryItemModel(
-                            name = "Socks",
-                            id = 1,
-                            price = 1.1
-                        ),1
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
                             name = "Cookie",
                             id = 1,
                             price = 1.1
@@ -66,69 +59,15 @@ class HomeFragment:Fragment() {
                     GroceryItemOrderModel(1,
                         GroceryItemModel(
                             name = "Koala",
-                            id = 1,
+                            id = 2,
                             price = 1.1
                         ),36
                     ) ,  GroceryItemOrderModel(1,
                         GroceryItemModel(
                             name = "Socks",
-                            id = 1,
+                            id = 3,
                             price = 1.1
                         ),1
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Cookie",
-                            id = 1,
-                            price = 1.1
-                        ),2
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Koala",
-                            id = 1,
-                            price = 1.1
-                        ),36
-                    ), GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Socks",
-                            id = 1,
-                            price = 1.1
-                        ),1
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Cookie",
-                            id = 1,
-                            price = 1.1
-                        ),2
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Koala",
-                            id = 1,
-                            price = 1.1
-                        ),36
-                    ) ,  GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Socks",
-                            id = 1,
-                            price = 1.1
-                        ),1
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Cookie",
-                            id = 1,
-                            price = 1.1
-                        ),2
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Koala",
-                            id = 1,
-                            price = 1.1
-                        ),36
                     )
                 )
             )

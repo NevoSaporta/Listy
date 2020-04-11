@@ -10,8 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentEditBinding
 import com.nevosap.listy.model.GroceryItemModel
+import com.nevosap.listy.model.GroceryItemOrderModel
+import com.nevosap.listy.model.GroceryListModel
 
 class AddEditFragment:Fragment() {
+    private  var groceryListModel: GroceryListModel? = null
+    private  var items: MutableList<GroceryItemOrderModel>? = null
+    companion object{
+        const val GROCERYLISTMODEL ="groceryListModel"
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -19,6 +26,10 @@ class AddEditFragment:Fragment() {
     ): View? {
         val binding: FragmentEditBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_edit,container,false)
         initRecyclerView(binding)
+        groceryListModel = arguments?.getParcelable(GROCERYLISTMODEL)
+        groceryListModel?.let {
+            items = it.items
+        }
         return binding.root
     }
     private fun initRecyclerView(binding: FragmentEditBinding) {
