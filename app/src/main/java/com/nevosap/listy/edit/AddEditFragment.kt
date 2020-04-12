@@ -27,13 +27,13 @@ class AddEditFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding: FragmentEditBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_edit,container,false)
-        val adapter = EditListAdapter(context!!,ordersData)
         //parsing data from safe args
         groceryListModel = arguments?.getParcelable(HomeFragment.GROCERYLISTMODEL)
         groceryListModel?.let {
             binding.editListName.setText( it.name)
             ordersData =it.orders
         }
+        val adapter = EditListAdapter(context!!,ordersData)
         initRecyclerView(adapter,binding)
         binding.cancelEditBtn.setOnClickListener{
             findNavController().navigate(AddEditFragmentDirections.actionAddEditFragmentToHomeFragment(null))
