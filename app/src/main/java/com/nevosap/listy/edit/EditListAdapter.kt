@@ -14,8 +14,14 @@ import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryItemOrderModel
 import com.nevosap.listy.model.GroceryListModel
 
-class EditListAdapter(context: Context,val orders:MutableList<GroceryItemOrderModel>?):ListAdapter<GroceryItemModel,EditListAdapter.ViewHolder>(GroceryEditDiffCallback()) {
+class EditListAdapter(context: Context,private val orders:MutableList<GroceryItemOrderModel>?):ListAdapter<GroceryItemModel,EditListAdapter.ViewHolder>(GroceryEditDiffCallback()) {
 
+    fun getOrders():MutableList<GroceryItemOrderModel>{
+        orders?.let {
+            return it
+        }
+        return mutableListOf()
+    }
     private val layoutInflater: LayoutInflater = context
         .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
