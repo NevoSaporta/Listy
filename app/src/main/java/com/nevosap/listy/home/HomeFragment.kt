@@ -16,6 +16,9 @@ import com.nevosap.listy.model.GroceryListModel
 import java.util.*
 
 class HomeFragment:Fragment() {
+    companion object{
+        const val GROCERYLISTMODEL ="groceryListModel"
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,6 +32,19 @@ class HomeFragment:Fragment() {
         return binding.root
     }
 
+    private fun checkForListUpdates():MutableList<GroceryListModel> {
+        val groceryListModel :GroceryListModel?= arguments?.getParcelable(GROCERYLISTMODEL)
+        val tmp = getTempList()
+        groceryListModel?.let {list->
+            if(!tmp.none { it.id == list.id }){
+                val oldList = tmp.first { it.id==list.id }
+                tmp.remove(oldList)
+            }
+            tmp.add(groceryListModel)
+        }
+        return tmp
+    }
+
     private fun initRecyclerView(binding: FragmentHomeBinding) {
         //Navigating to Details Fragment when item is pressed
         val adapter = GroceryListAdapter(GroceryListClickListener {
@@ -40,13 +56,12 @@ class HomeFragment:Fragment() {
         }, context!!)
         binding.homeRcv.layoutManager = LinearLayoutManager(context)
         binding.homeRcv.adapter = adapter
-        val tmpList: List<GroceryListModel> = getTempList()
-        adapter.submitList(tmpList)
+        adapter.submitList(checkForListUpdates())
         adapter.notifyDataSetChanged()
     }
 
-    private fun getTempList(): List<GroceryListModel> {
-        return listOf(
+    private fun getTempList(): MutableList<GroceryListModel> {
+        return mutableListOf(
             GroceryListModel(
                 id = 1,
                 name = "List1",

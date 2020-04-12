@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentEditBinding
+import com.nevosap.listy.home.HomeFragment
+import com.nevosap.listy.home.HomeFragmentDirections
 import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryItemOrderModel
 import com.nevosap.listy.model.GroceryListModel
@@ -18,9 +20,7 @@ import java.util.*
 class AddEditFragment:Fragment() {
     private  var groceryListModel: GroceryListModel? = null
     private var ordersData:MutableList<GroceryItemOrderModel>?=null
-    companion object{
-        const val GROCERYLISTMODEL ="groceryListModel"
-    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,7 +29,7 @@ class AddEditFragment:Fragment() {
         val binding: FragmentEditBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_edit,container,false)
         val adapter = EditListAdapter(context!!,ordersData)
         //parsing data from safe args
-        groceryListModel = arguments?.getParcelable(GROCERYLISTMODEL)
+        groceryListModel = arguments?.getParcelable(HomeFragment.GROCERYLISTMODEL)
         groceryListModel?.let {
             binding.editListName.setText( it.name)
             ordersData =it.orders

@@ -8,21 +8,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentDetailsBinding
+import com.nevosap.listy.home.HomeFragment
 import com.nevosap.listy.model.GroceryListModel
 
 class ListDetailsFragment:Fragment() {
     private lateinit var groceryListModel :GroceryListModel
     //safe argument's name
-    companion object{
-        const val GROCERYLISTMODEL ="groceryListModel"
-    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
         val binding: FragmentDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details,container,false)
         //getting the groceryListModel from safe args
-        groceryListModel = arguments?.getParcelable(GROCERYLISTMODEL)!!
+        groceryListModel = arguments?.getParcelable(HomeFragment.GROCERYLISTMODEL)!!
         binding.groceryList =groceryListModel
         setHasOptionsMenu(true)
         initRecyclerView(binding)
