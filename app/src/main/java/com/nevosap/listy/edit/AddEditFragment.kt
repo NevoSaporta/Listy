@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentEditBinding
@@ -25,12 +26,18 @@ class AddEditFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding: FragmentEditBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_edit,container,false)
+        //parsing data from safe args
         groceryListModel = arguments?.getParcelable(GROCERYLISTMODEL)
         groceryListModel?.let {
             binding.editListName.setText( it.name)
             ordersData =it.orders
         }
+        binding.cancelEditBtn.setOnClickListener{
+            findNavController().navigate(AddEditFragmentDirections.actionAddEditFragmentToHomeFragment(null))
+        }
+
         initRecyclerView(binding)
+
         return binding.root
     }
     private fun initRecyclerView(binding: FragmentEditBinding) {
