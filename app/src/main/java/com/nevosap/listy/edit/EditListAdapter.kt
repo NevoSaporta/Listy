@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.ListItemGroceryEditBinding
 import com.nevosap.listy.model.GroceryItemModel
+import com.nevosap.listy.model.GroceryItemOrderModel
 import com.nevosap.listy.model.GroceryListModel
 
-class EditListAdapter(context: Context,val groceryListData:GroceryListModel?):ListAdapter<GroceryItemModel,EditListAdapter.ViewHolder>(GroceryEditDiffCallback()) {
+class EditListAdapter(context: Context,val orders:MutableList<GroceryItemOrderModel>?):ListAdapter<GroceryItemModel,EditListAdapter.ViewHolder>(GroceryEditDiffCallback()) {
 
     private val layoutInflater: LayoutInflater = context
         .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -31,8 +32,8 @@ class EditListAdapter(context: Context,val groceryListData:GroceryListModel?):Li
     inner class ViewHolder(private val binding: ListItemGroceryEditBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(groceryItemModel: GroceryItemModel){
             //loading data from safe args to rcv
-            groceryListData?.let {
-                for (order in it.orders){
+            orders?.let {
+                for (order in it){
                     if(groceryItemModel.id==order.item.id){
                         binding.itemQuantity.text = order.quantity.toString()
                         binding.itemQuantity.visibility = View.VISIBLE
