@@ -16,6 +16,9 @@ import com.nevosap.listy.model.GroceryListModel
 import java.util.*
 
 class HomeFragment:Fragment() {
+    companion object{
+        const val GROCERYLISTMODEL ="groceryListModel"
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,7 +26,23 @@ class HomeFragment:Fragment() {
     ): View? {
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,container,false)
         initRecyclerView(binding)
+        binding.addListBtn.setOnClickListener {
+           findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddEditFragment(null))
+        }
         return binding.root
+    }
+
+    private fun checkForListUpdates():MutableList<GroceryListModel> {
+        val groceryListModel :GroceryListModel?= arguments?.getParcelable(GROCERYLISTMODEL)
+        val tmp = getTempList()
+        groceryListModel?.let {list->
+            if(!tmp.none { it.id == list.id }){
+                val oldList = tmp.first { it.id==list.id }
+                tmp.remove(oldList)
+            }
+            tmp.add(groceryListModel)
+        }
+        return tmp
     }
 
     private fun initRecyclerView(binding: FragmentHomeBinding) {
@@ -37,99 +56,37 @@ class HomeFragment:Fragment() {
         }, context!!)
         binding.homeRcv.layoutManager = LinearLayoutManager(context)
         binding.homeRcv.adapter = adapter
-        val tmpList: List<GroceryListModel> = getTempList()
-        adapter.submitList(tmpList)
+        adapter.submitList(checkForListUpdates())
         adapter.notifyDataSetChanged()
     }
 
-    private fun getTempList(): List<GroceryListModel> {
-        return listOf(
+    private fun getTempList(): MutableList<GroceryListModel> {
+        return mutableListOf(
             GroceryListModel(
                 id = 1,
                 name = "List1",
                 creationDate = Date(System.currentTimeMillis()),
-                items = mutableListOf(
+                orders = mutableListOf(
                     GroceryItemOrderModel(1,
                         GroceryItemModel(
-                            name = "Socks",
-                            id = 1,
-                            price = 1.1
-                        ),1
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Cookie",
+                            name = "Milk",
                             id = 1,
                             price = 1.1
                         ),2
                     ),
-                    GroceryItemOrderModel(1,
+                    GroceryItemOrderModel(2,
                         GroceryItemModel(
-                            name = "Koala",
-                            id = 1,
+                            name = "Meat",
+                            id = 2,
                             price = 1.1
                         ),36
-                    ) ,  GroceryItemOrderModel(1,
+                    ) /*,  GroceryItemOrderModel(1,
                         GroceryItemModel(
-                            name = "Socks",
-                            id = 1,
+                            name = "Water",
+                            id = 3,
                             price = 1.1
                         ),1
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Cookie",
-                            id = 1,
-                            price = 1.1
-                        ),2
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Koala",
-                            id = 1,
-                            price = 1.1
-                        ),36
-                    ), GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Socks",
-                            id = 1,
-                            price = 1.1
-                        ),1
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Cookie",
-                            id = 1,
-                            price = 1.1
-                        ),2
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Koala",
-                            id = 1,
-                            price = 1.1
-                        ),36
-                    ) ,  GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Socks",
-                            id = 1,
-                            price = 1.1
-                        ),1
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Cookie",
-                            id = 1,
-                            price = 1.1
-                        ),2
-                    ),
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Koala",
-                            id = 1,
-                            price = 1.1
-                        ),36
-                    )
+                    )*/
                 )
             )
         )
