@@ -1,21 +1,23 @@
 package com.nevosap.listy.edit
 
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.NumberPicker
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.ListItemGroceryEditBinding
 import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryItemOrderModel
 import com.nevosap.listy.model.GroceryListModel
 
-class EditListAdapter(context: Context,private val orders:MutableList<GroceryItemOrderModel>?):ListAdapter<GroceryItemModel,EditListAdapter.ViewHolder>(GroceryEditDiffCallback()) {
-
+class EditListAdapter(context: Context,private var orders:MutableList<GroceryItemOrderModel>?):ListAdapter<GroceryItemModel,EditListAdapter.ViewHolder>(GroceryEditDiffCallback()) {
     fun getOrders():MutableList<GroceryItemOrderModel>{
         orders?.let {
             return it
@@ -48,8 +50,47 @@ class EditListAdapter(context: Context,private val orders:MutableList<GroceryIte
                 }
             }
             binding.groceryItemModel = groceryItemModel
+            //setting on click listener
+            binding.root.setOnClickListener {
+                onClick(groceryItemModel)
+            }
             binding.executePendingBindings()
         }
+
+        private fun onClick(groceryItemModel: GroceryItemModel) {
+            if (binding.itemSelected.isChecked) {
+                val order = orders?.first { it.id == groceryItemModel.id }
+                orders?.remove(order)
+                binding.itemQuantity.visibility = View.INVISIBLE
+            } else {
+                if (null == orders) {
+                    orders = mutableListOf()
+                }
+                orders!!.add(GroceryItemOrderModel(groceryItemModel.id, groceryItemModel, 1))
+                binding.itemQuantity.visibility = View.VISIBLE
+            }
+            binding.itemSelected.isChecked = !binding.itemSelected.isChecked
+            notifyDataSetChanged()
+        }
+        /*private fun setQuantity(context: Context):Int{
+            val layoutInflater: LayoutInflater = context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view= layoutInflater.inflate(R.layout.dialog_quantity_edit,null)
+            val numberPicker =view.findViewById<NumberPicker>(R.id.quantity_picker)
+            numberPicker.minValue=1
+            numberPicker.maxValue=1000
+            var quantity:Int = 0
+            val dialog =MaterialAlertDialogBuilder(context.applicationContext)
+                .setView(view)
+                .setPositiveButton(R.string.quantity_dialog_positive,DialogInterface.OnClickListener{ dialogInterface: DialogInterface, i: Int ->
+                    quantity = numberPicker.value
+                })
+                .setNegativeButton(R.string.quantity_dialog_negative,DialogInterface.OnClickListener{ dialogInterface: DialogInterface, i: Int ->
+                    quantity = 1
+                }).create()
+            dialog.show()
+            return quantity
+        }*/
     }
 
     class GroceryEditDiffCallback: DiffUtil.ItemCallback<GroceryItemModel>(){
