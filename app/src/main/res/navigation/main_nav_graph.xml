@@ -10,6 +10,13 @@
         <action
             android:id="@+id/action_homeFragment_to_listDetailsFragment"
             app:destination="@id/listDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addEditFragment"
+            app:destination="@id/addEditFragment" />
+        <argument
+            android:name="groceryListModel"
+            app:argType="com.nevosap.listy.model.GroceryListModel"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/listDetailsFragment"
@@ -18,5 +25,20 @@
         <argument
             android:name="groceryListModel"
             app:argType="com.nevosap.listy.model.GroceryListModel" />
+        <action
+            android:id="@+id/action_listDetailsFragment_to_addEditFragment"
+            app:destination="@id/addEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditFragment"
+        android:name="com.nevosap.listy.edit.AddEditFragment"
+        android:label="AddEditFragment" >
+        <argument
+            android:name="groceryListModel"
+            app:argType="com.nevosap.listy.model.GroceryListModel"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_addEditFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
