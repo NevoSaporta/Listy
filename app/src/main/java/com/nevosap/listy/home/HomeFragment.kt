@@ -6,215 +6,88 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentHomeBinding
 import com.nevosap.listy.model.GroceryItemModel
+import com.nevosap.listy.model.GroceryItemOrderModel
 import com.nevosap.listy.model.GroceryListModel
-import java.time.LocalDateTime
 import java.util.*
 
 class HomeFragment:Fragment() {
+    companion object{
+        const val GROCERYLISTMODEL ="groceryListModel"
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,container,false)
-
-        val adapter = GroceryListAdapter(context!!)
-
-        binding.homeRcv.layoutManager = LinearLayoutManager(context)
-        binding.homeRcv.adapter =adapter
-        val tmpList : List<GroceryListModel> = getTempList()
-        adapter.submitList(tmpList)
-        adapter.notifyDataSetChanged()
+        initRecyclerView(binding)
+        binding.addListBtn.setOnClickListener {
+           findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddEditFragment(null))
+        }
         return binding.root
     }
 
-    private fun getTempList(): List<GroceryListModel> {
-        return listOf(
+    private fun checkForListUpdates():MutableList<GroceryListModel> {
+        val groceryListModel :GroceryListModel?= arguments?.getParcelable(GROCERYLISTMODEL)
+        val tmp = getTempList()
+        groceryListModel?.let {list->
+            if(!tmp.none { it.id == list.id }){
+                val oldList = tmp.first { it.id==list.id }
+                tmp.remove(oldList)
+            }
+            tmp.add(groceryListModel)
+        }
+        return tmp
+    }
+
+    private fun initRecyclerView(binding: FragmentHomeBinding) {
+        //Navigating to Details Fragment when item is pressed
+        val adapter = GroceryListAdapter(GroceryListClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToListDetailsFragment(
+                    it
+                )
+            )
+        }, context!!)
+        binding.homeRcv.layoutManager = LinearLayoutManager(context)
+        binding.homeRcv.adapter = adapter
+        adapter.submitList(checkForListUpdates())
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun getTempList(): MutableList<GroceryListModel> {
+        return mutableListOf(
             GroceryListModel(
                 id = 1,
                 name = "List1",
                 creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
+                orders = mutableListOf(
+                    GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Milk",
+                            id = 1,
+                            price = 1.1
+                        ),2
+                    ),
+                    GroceryItemOrderModel(2,
+                        GroceryItemModel(
+                            name = "Meat",
+                            id = 2,
+                            price = 1.1
+                        ),36
+                    ) /*,  GroceryItemOrderModel(1,
+                        GroceryItemModel(
+                            name = "Water",
+                            id = 3,
+                            price = 1.1
+                        ),1
+                    )*/
                 )
-
-            ),   GroceryListModel(
-                id = 2,
-                name = "List2",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 3,
-                name = "List3",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 4,
-                name = "List4",
-                creationDate =Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 5,
-                name = "List5",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 6,
-                name = "List6",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 7,
-                name = "List7",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 8,
-                name = "List8",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 8,
-                name = "List8",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 9,
-                name = "List9",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 10,
-                name = "List10",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 11,
-                name = "List11",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 12,
-                name = "List12",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 13,
-                name = "List13",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
-            ),   GroceryListModel(
-                id = 14,
-                name = "List14",
-                creationDate = Date(System.currentTimeMillis()),
-                items = listOf<GroceryItemModel>(
-                    GroceryItemModel(
-                        name = "asdasd",
-                        id = 1,
-                        price = 1.1
-                    )
-                )
-
             )
         )
     }
