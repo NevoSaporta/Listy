@@ -20,7 +20,7 @@ import java.util.*
 class AddEditFragment:Fragment() {
     private val model: GroceryViewModel by activityViewModels()
     private  var groceryListModel: GroceryListModel? = null
-    private var ordersData:MutableList<GroceryItemOrderModel>?=null
+    private var ordersData:MutableList<GroceryItemOrderModel> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,8 +33,7 @@ class AddEditFragment:Fragment() {
         groceryListModel = arguments?.getParcelable(HomeFragment.GROCERYLISTMODEL)
         groceryListModel?.let {
             binding.editListName.setText( it.name)
-            ordersData = mutableListOf()
-            ordersData!!.addAll(it.orders)
+            ordersData.addAll(it.orders)
         }
         val adapter = EditListAdapter(context!!, ordersData,parentFragmentManager)
         initRecyclerView(adapter,binding)
