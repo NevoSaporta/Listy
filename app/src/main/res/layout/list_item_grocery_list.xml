@@ -5,15 +5,15 @@
             name="groceryList"
             type="com.nevosap.listy.model.GroceryListModel" />
         <variable
-            name="clickListener"
-            type="com.nevosap.listy.home.GroceryListClickListener"/>
+            name="groceryViewModel"
+            type="com.nevosap.listy.model.GroceryViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:onClick="@{()->clickListener.onClick(groceryList)}"
+        android:onClick="@{()->groceryViewModel.groceryListPressed(groceryList)}"
         >
         <TextView
             android:id="@+id/list_name"
