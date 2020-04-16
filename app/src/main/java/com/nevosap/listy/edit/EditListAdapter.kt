@@ -72,25 +72,6 @@ class EditListAdapter(context: Context,private var orders:MutableList<GroceryIte
             binding.itemSelected.isChecked = !binding.itemSelected.isChecked
             notifyDataSetChanged()
         }
-        /*private fun setQuantity(context: Context):Int{
-            val layoutInflater: LayoutInflater = context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view= layoutInflater.inflate(R.layout.dialog_quantity_edit,null)
-            val numberPicker =view.findViewById<NumberPicker>(R.id.quantity_picker)
-            numberPicker.minValue=1
-            numberPicker.maxValue=1000
-            var quantity:Int = 0
-            val dialog =MaterialAlertDialogBuilder(context.applicationContext)
-                .setView(view)
-                .setPositiveButton(R.string.quantity_dialog_positive,DialogInterface.OnClickListener{ dialogInterface: DialogInterface, i: Int ->
-                    quantity = numberPicker.value
-                })
-                .setNegativeButton(R.string.quantity_dialog_negative,DialogInterface.OnClickListener{ dialogInterface: DialogInterface, i: Int ->
-                    quantity = 1
-                }).create()
-            dialog.show()
-            return quantity
-        }*/
     }
 
     class GroceryEditDiffCallback: DiffUtil.ItemCallback<GroceryItemModel>(){
