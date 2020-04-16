@@ -33,9 +33,10 @@ class AddEditFragment:Fragment() {
         groceryListModel = arguments?.getParcelable(HomeFragment.GROCERYLISTMODEL)
         groceryListModel?.let {
             binding.editListName.setText( it.name)
-            ordersData =it.orders
+            ordersData = mutableListOf()
+            ordersData!!.addAll(it.orders)
         }
-        val adapter = EditListAdapter(context!!,ordersData)
+        val adapter = EditListAdapter(context!!, ordersData,parentFragmentManager)
         initRecyclerView(adapter,binding)
         model.itemsInStock.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             adapter.submitList(it)

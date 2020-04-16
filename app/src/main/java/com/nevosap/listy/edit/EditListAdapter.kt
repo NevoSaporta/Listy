@@ -1,23 +1,20 @@
 package com.nevosap.listy.edit
 
 import android.content.Context
-import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.NumberPicker
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.ListItemGroceryEditBinding
 import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryItemOrderModel
-import com.nevosap.listy.model.GroceryListModel
 
-class EditListAdapter(context: Context,private var orders:MutableList<GroceryItemOrderModel>?):ListAdapter<GroceryItemModel,EditListAdapter.ViewHolder>(GroceryEditDiffCallback()) {
+class EditListAdapter(context: Context,private var orders:MutableList<GroceryItemOrderModel>?,private val fragmentManager: FragmentManager):ListAdapter<GroceryItemModel,EditListAdapter.ViewHolder>(GroceryEditDiffCallback()) {
     fun getOrders():MutableList<GroceryItemOrderModel>{
         orders?.let {
             return it
@@ -37,7 +34,8 @@ class EditListAdapter(context: Context,private var orders:MutableList<GroceryIte
         holder.bind(getItem(position))
     }
 
-    inner class ViewHolder(private val binding: ListItemGroceryEditBinding):RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(private val binding: ListItemGroceryEditBinding): RecyclerView.ViewHolder(binding.root){
+
         fun bind(groceryItemModel: GroceryItemModel){
             //loading data from safe args to rcv
             orders?.let {
@@ -66,8 +64,10 @@ class EditListAdapter(context: Context,private var orders:MutableList<GroceryIte
                 if (null == orders) {
                     orders = mutableListOf()
                 }
-                orders!!.add(GroceryItemOrderModel(groceryItemModel.id, groceryItemModel, 1))
-                binding.itemQuantity.visibility = View.VISIBLE
+                val order =GroceryItemOrderModel(groceryItemModel.id, groceryItemModel, 1)
+                val quantityDialogFragment = SelectQuantityDialogFragment(order, orders!!,binding)
+                quantityDialogFragment.show(fragmentManager,EditListAdapter::class.java.name)
+
             }
             binding.itemSelected.isChecked = !binding.itemSelected.isChecked
             notifyDataSetChanged()
@@ -81,5 +81,6 @@ class EditListAdapter(context: Context,private var orders:MutableList<GroceryIte
         override fun areContentsTheSame(oldItem: GroceryItemModel, newItem: GroceryItemModel)=
             oldItem == newItem
     }
+
 
 }
