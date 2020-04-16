@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nevosap.listy.R
@@ -13,9 +14,12 @@ import com.nevosap.listy.databinding.FragmentHomeBinding
 import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryItemOrderModel
 import com.nevosap.listy.model.GroceryListModel
+import com.nevosap.listy.model.GroceryViewModel
 import java.util.*
 
 class HomeFragment:Fragment() {
+    //Shared vm for all the fragments in the activity
+    private val model: GroceryViewModel by activityViewModels<GroceryViewModel>()
     companion object{
         const val GROCERYLISTMODEL ="groceryListModel"
     }
@@ -25,42 +29,35 @@ class HomeFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,container,false)
+        binding.groceryViewModel = model
         initRecyclerView(binding)
-        binding.addListBtn.setOnClickListener {
-           findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddEditFragment(null))
-        }
-        return binding.root
-    }
-
-    private fun checkForListUpdates():MutableList<GroceryListModel> {
-        val groceryListModel :GroceryListModel?= arguments?.getParcelable(GROCERYLISTMODEL)
-        val tmp = getTempList()
-        groceryListModel?.let {list->
-            if(!tmp.none { it.id == list.id }){
-                val oldList = tmp.first { it.id==list.id }
-                tmp.remove(oldList)
+        model.navigateNew.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if(it){
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddEditFragment(null))
+                model.navigateNewListEnded()
             }
-            tmp.add(groceryListModel)
-        }
-        return tmp
+        })
+        model.navigateDetails.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            it?.let {
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToListDetailsFragment(
+                        it
+                    ))
+            }
+        })
+        return binding.root
     }
 
     private fun initRecyclerView(binding: FragmentHomeBinding) {
         //Navigating to Details Fragment when item is pressed
-        val adapter = GroceryListAdapter(GroceryListClickListener {
-            findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToListDetailsFragment(
-                    it
-                )
-            )
-        }, context!!)
+        val adapter = GroceryListAdapter(model, context!!)
         binding.homeRcv.layoutManager = LinearLayoutManager(context)
         binding.homeRcv.adapter = adapter
-        adapter.submitList(checkForListUpdates())
-        adapter.notifyDataSetChanged()
+        binding.lifecycleOwner =this
+        adapter.submitList(model.allLists.value)
     }
 
-    private fun getTempList(): MutableList<GroceryListModel> {
+    /*private fun getTempList(): MutableList<GroceryListModel> {
         return mutableListOf(
             GroceryListModel(
                 id = 1,
@@ -91,4 +88,18 @@ class HomeFragment:Fragment() {
             )
         )
     }
+
+    private fun checkForListUpdates():MutableList<GroceryListModel> {
+        val groceryListModel :GroceryListModel?= arguments?.getParcelable(GROCERYLISTMODEL)
+        val tmp = getTempList()
+        groceryListModel?.let {list->
+            if(!tmp.none { it.id == list.id }){
+                val oldList = tmp.first { it.id==list.id }
+                tmp.remove(oldList)
+            }
+            tmp.add(groceryListModel)
+        }
+        return tmp
+    }*/
+
 }

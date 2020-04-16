@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="groceryViewModel"
+            type="com.nevosap.listy.model.GroceryViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -9,7 +14,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/home_rcv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_list_btn"
@@ -18,7 +23,8 @@
             android:layout_margin="@dimen/regular_margin"
             android:src="@android:drawable/ic_menu_add"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{()->groceryViewModel.newListPressed()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

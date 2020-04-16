@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentDetailsBinding
 import com.nevosap.listy.home.HomeFragment
 import com.nevosap.listy.model.GroceryListModel
+import com.nevosap.listy.model.GroceryViewModel
 
 class ListDetailsFragment:Fragment() {
+    private val model: GroceryViewModel by activityViewModels<GroceryViewModel>()
     private lateinit var groceryListModel :GroceryListModel
     //safe argument's name
 
@@ -21,7 +24,10 @@ class ListDetailsFragment:Fragment() {
         savedInstanceState: Bundle?): View? {
         val binding: FragmentDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details,container,false)
         //getting the groceryListModel from safe args
-        groceryListModel = arguments?.getParcelable(HomeFragment.GROCERYLISTMODEL)!!
+        model.navigateDetails.value?.let {
+            groceryListModel =it
+            model.navigateDetailsEnded()
+        }
         binding.groceryList =groceryListModel
         setHasOptionsMenu(true)
         initRecyclerView(binding)
