@@ -19,7 +19,8 @@ import java.util.*
 
 class HomeFragment:Fragment() {
     //Shared vm for all the fragments in the activity
-    private val model: GroceryViewModel by activityViewModels<GroceryViewModel>()
+    private val model: GroceryViewModel by activityViewModels()
+    private lateinit var  adapter:GroceryListAdapter
     companion object{
         const val GROCERYLISTMODEL ="groceryListModel"
     }
@@ -30,7 +31,8 @@ class HomeFragment:Fragment() {
     ): View? {
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,container,false)
         binding.groceryViewModel = model
-        initRecyclerView(binding)
+        adapter  = GroceryListAdapter(model, context!!)
+        initRecyclerView(binding,adapter)
         model.navigateNew.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if(it){
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddEditFragment(null))
@@ -43,14 +45,17 @@ class HomeFragment:Fragment() {
                     HomeFragmentDirections.actionHomeFragmentToListDetailsFragment(
                         it
                     ))
+                model.navigateDetailsEnded()
             }
+        })
+        model.allLists.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            adapter.submitList(it)
         })
         return binding.root
     }
 
-    private fun initRecyclerView(binding: FragmentHomeBinding) {
+    private fun initRecyclerView(binding: FragmentHomeBinding,adapter: GroceryListAdapter) {
         //Navigating to Details Fragment when item is pressed
-        val adapter = GroceryListAdapter(model, context!!)
         binding.homeRcv.layoutManager = LinearLayoutManager(context)
         binding.homeRcv.adapter = adapter
         binding.lifecycleOwner =this
