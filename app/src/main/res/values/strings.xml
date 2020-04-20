@@ -10,4 +10,5 @@
     <string name="edit_list_name_error">"Please enter a list name"</string>
     <string name="quantity_dialog_positive">OK</string>
     <string name="quantity_dialog_negative">Cancel</string>
+    <string name="quantity_dialog_title">Select item quantity</string>
 </resources>
