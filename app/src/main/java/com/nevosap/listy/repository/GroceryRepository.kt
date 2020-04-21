@@ -5,9 +5,9 @@ import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryListModel
 
 interface GroceryRepository {
-    fun getItemsInStock(): MutableLiveData<MutableList<GroceryItemModel>>
+    fun getItemsInStock():MutableList<GroceryItemModel>
 
-    fun getAllLists():MutableLiveData<MutableList<GroceryListModel>>
+    fun getAllLists():MutableList<GroceryListModel>
 
     fun addOrUpdateList(groceryListModel: GroceryListModel)
 }
