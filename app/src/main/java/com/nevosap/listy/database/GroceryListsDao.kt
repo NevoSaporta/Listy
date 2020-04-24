@@ -9,7 +9,7 @@ import com.nevosap.listy.model.GroceryListModel
 @Dao
 interface GroceryListsDao {
     @Query("SELECT * FROM GroceryListModel")
-    fun getAllLists():List<GroceryListModel>
+    fun getAllLists():MutableList<GroceryListModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addOrUpdateList(groceryListModel: GroceryListModel)

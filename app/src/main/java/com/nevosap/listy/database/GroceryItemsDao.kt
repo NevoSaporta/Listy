@@ -7,8 +7,8 @@ import com.nevosap.listy.model.GroceryItemModel
 
 interface GroceryItemsDao {
     @Query("SELECT * FROM GroceryItemModel")
-    fun getItemsInStock()
+    fun getItemsInStock():MutableList<GroceryItemModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun updateStock(items:List<GroceryItemModel>)
+    fun updateStock(items:MutableList<GroceryItemModel>)
 }
