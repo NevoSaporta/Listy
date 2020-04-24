@@ -91,14 +91,14 @@ class GroceryViewModel:ViewModel() {
         _navigateHome.value =false
     }
     fun addOrUpdateList(groceryListModel: GroceryListModel){
-        val target =_allLists.value!!.firstOrNull{it.id == groceryListModel.id}
-        if(null ==target ){
-            //add
-            _allLists.value!!.add(groceryListModel)
-        }else{
-            _allLists.value!!.remove(target)
-            _allLists.value!!.add(groceryListModel)
-        }
+//        val target =_allLists.value!!.firstOrNull{it.id == groceryListModel.id}
+//        if(null ==target ){
+//            //add
+//            _allLists.value!!.add(groceryListModel)
+//        }else{
+//            _allLists.value!!.remove(target)
+//            _allLists.value!!.add(groceryListModel)
+//        }
         repository.addOrUpdateList(groceryListModel)
         _editSavePressed.value =false
         navigateHome()
