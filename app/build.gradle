@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    def nav_version = "2.3.0-alpha05"
+    def nav_version = "2.3.0-alpha06"
     def room_version = "2.2.5"
     def material_design_version ="material:1.1.0"
 
@@ -63,5 +63,7 @@ dependencies {
 
     //room
     implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
 
 }
