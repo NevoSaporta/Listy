@@ -8,6 +8,8 @@ import kotlinx.coroutines.*
 import java.util.*
 
 class MyGroceryRepository private constructor():GroceryRepository {
+    private val job =Job()
+    private val uiScope = CoroutineScope(job+Dispatchers.Main)
     companion object{
         val instance:MyGroceryRepository by lazy{
             MyGroceryRepository()
