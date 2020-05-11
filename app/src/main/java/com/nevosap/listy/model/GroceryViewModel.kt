@@ -8,10 +8,11 @@ import com.nevosap.listy.repository.MyGroceryRepository
 import java.util.*
 
 class GroceryViewModel:ViewModel() {
-    private val repository =MyGroceryRepository.instance
+//todo: initialize repository with listeners
+    //    private val repository =MyGroceryRepository()
     private val _itemsInStock :MutableLiveData<MutableList<GroceryItemModel>> by lazy{
         MutableLiveData<MutableList<GroceryItemModel>>().also {
-            it.value = repository.getItemsInStock()
+//            it.value = repository.getItemsInStock()
         }
     }
     val itemsInStock : LiveData<MutableList<GroceryItemModel>>
@@ -19,7 +20,7 @@ class GroceryViewModel:ViewModel() {
 
     private val _allLists : MutableLiveData<MutableList<GroceryListModel>> by lazy{
        MutableLiveData<MutableList<GroceryListModel>>().also {
-            it.value = repository.getAllLists()
+//            it.value = repository.getAllLists()
        }
     }
     val  allLists: LiveData<MutableList<GroceryListModel>>
@@ -99,7 +100,7 @@ class GroceryViewModel:ViewModel() {
 //            _allLists.value!!.remove(target)
 //            _allLists.value!!.add(groceryListModel)
 //        }
-        repository.addOrUpdateList(groceryListModel)
+//        repository.addOrUpdateList(groceryListModel)
         _editSavePressed.value =false
         navigateHome()
     }
