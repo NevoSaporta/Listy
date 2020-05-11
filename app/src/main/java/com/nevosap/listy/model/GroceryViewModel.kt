@@ -15,7 +15,7 @@ class GroceryViewModel:ViewModel() {
         MutableLiveData<MutableList<GroceryItemModel>>().also {
             repository.getItemsInStock(object :Listener<MutableList<GroceryItemModel>>{
                 override fun onSuccess(element: MutableList<GroceryItemModel>) {
-                    _itemsInStock.value =element
+                    _itemsInStock.postValue(element)
                 }
 
                 override fun onFailure(error: Throwable) {

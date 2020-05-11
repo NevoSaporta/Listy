@@ -12,8 +12,18 @@ class MyGroceryRepository ():GroceryRepository {
     private val uiScope = CoroutineScope(job+Dispatchers.Main)
 
     override fun getItemsInStock(itemsListener: Listener<MutableList<GroceryItemModel>>) {
-        //TODO("Not yet implemented")
-
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                val items =DatabaseModule.groceryItemsDao.getItemsInStock()
+                if (items.isEmpty()){
+                    val tmp =getTmpStock()
+                    DatabaseModule.groceryItemsDao.updateStock(tmp)
+                    itemsListener.onSuccess(tmp)
+                }else{
+                    itemsListener.onSuccess(items)
+                }
+            }
+        }
     }
 
     override fun getAllLists(listListener: Listener<MutableList<GroceryListModel>>) {
