@@ -7,20 +7,23 @@ import com.nevosap.listy.model.GroceryListModel
 import kotlinx.coroutines.*
 import java.util.*
 
-class MyGroceryRepository (listListener: Listener<GroceryListModel>, itemsListener: Listener<GroceryItemModel>):GroceryRepository {
+class MyGroceryRepository ():GroceryRepository {
     private val job =Job()
     private val uiScope = CoroutineScope(job+Dispatchers.Main)
 
-    override fun getItemsInStock(){
+    override fun getItemsInStock(itemsListener: Listener<MutableList<GroceryItemModel>>) {
         //TODO("Not yet implemented")
 
     }
 
-    override fun getAllLists() {
+    override fun getAllLists(listListener: Listener<MutableList<GroceryListModel>>) {
         //TODO("Not yet implemented")
     }
 
-    override fun addOrUpdateList(groceryListModel: GroceryListModel) {
+    override fun addOrUpdateList(
+        listListener: Listener<MutableList<GroceryListModel>>,
+        groceryListModel: GroceryListModel
+    ) {
         //TODO("Not yet implemented")
     }
     private fun getTmpStock ()= mutableListOf(

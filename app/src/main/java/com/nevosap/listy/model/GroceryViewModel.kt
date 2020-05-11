@@ -4,15 +4,24 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.nevosap.listy.repository.Listener
 import com.nevosap.listy.repository.MyGroceryRepository
 import java.util.*
 
 class GroceryViewModel:ViewModel() {
-//todo: initialize repository with listeners
-    //    private val repository =MyGroceryRepository()
+    private val repository = MyGroceryRepository()
+
     private val _itemsInStock :MutableLiveData<MutableList<GroceryItemModel>> by lazy{
         MutableLiveData<MutableList<GroceryItemModel>>().also {
-//            it.value = repository.getItemsInStock()
+            repository.getItemsInStock(object :Listener<MutableList<GroceryItemModel>>{
+                override fun onSuccess(element: MutableList<GroceryItemModel>) {
+                    _itemsInStock.value =element
+                }
+
+                override fun onFailure(error: Throwable) {
+                    TODO("Not yet implemented")
+                }
+            })
         }
     }
     val itemsInStock : LiveData<MutableList<GroceryItemModel>>
@@ -20,11 +29,20 @@ class GroceryViewModel:ViewModel() {
 
     private val _allLists : MutableLiveData<MutableList<GroceryListModel>> by lazy{
        MutableLiveData<MutableList<GroceryListModel>>().also {
-//            it.value = repository.getAllLists()
+           repository.getAllLists(object :Listener<MutableList<GroceryListModel>>{
+               override fun onSuccess(element: MutableList<GroceryListModel>) {
+                   _allLists.value =element
+               }
+
+               override fun onFailure(error: Throwable) {
+                   TODO("Not yet implemented")
+               }
+           })
        }
     }
     val  allLists: LiveData<MutableList<GroceryListModel>>
         get() = _allLists
+
 
     private val _navigateNew:MutableLiveData<Boolean>by lazy{
         MutableLiveData<Boolean>()
@@ -100,7 +118,15 @@ class GroceryViewModel:ViewModel() {
 //            _allLists.value!!.remove(target)
 //            _allLists.value!!.add(groceryListModel)
 //        }
-//        repository.addOrUpdateList(groceryListModel)
+         repository.addOrUpdateList(object :Listener<MutableList<GroceryListModel>>{
+             override fun onSuccess(element: MutableList<GroceryListModel>) {
+                 _allLists.value =element
+             }
+
+             override fun onFailure(error: Throwable) {
+                 TODO("Not yet implemented")
+             }
+         },groceryListModel)
         _editSavePressed.value =false
         navigateHome()
     }
