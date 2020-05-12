@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -59,7 +60,7 @@ class ListDetailsFragment:Fragment() {
             }
             R.id.delete_menu_item ->{
                 val dialog = DeleteListDialogFragment(model,groceryListModel)
-                dialog.show(parentFragmentManager,ListDetailsFragment::class.java.name)
+                dialog.show(FragmentActivity().supportFragmentManager,ListDetailsFragment::class.java.name)
                 true
             }
             else -> super.onOptionsItemSelected(item)

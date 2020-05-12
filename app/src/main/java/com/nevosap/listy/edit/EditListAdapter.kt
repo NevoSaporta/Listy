@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -66,7 +67,7 @@ class EditListAdapter(context: Context,private var orders:MutableList<GroceryIte
                 }
                 val order =GroceryItemOrderModel(groceryItemModel.id, groceryItemModel, 1)
                 val quantityDialogFragment = SelectQuantityDialogFragment(order, orders!!,binding)
-                quantityDialogFragment.show(fragmentManager,EditListAdapter::class.java.name)
+                quantityDialogFragment.show(FragmentActivity().supportFragmentManager,EditListAdapter::class.java.name)
 
             }
             binding.itemSelected.isChecked = !binding.itemSelected.isChecked
