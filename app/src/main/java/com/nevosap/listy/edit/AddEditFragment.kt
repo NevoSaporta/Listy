@@ -36,7 +36,7 @@ class AddEditFragment:Fragment() {
             binding.editListName.setText( it.name)
             ordersData.addAll(it.orders)
         }
-        val adapter = EditListAdapter(requireContext(), ordersData,parentFragmentManager)
+        val adapter = EditListAdapter(requireContext(), ordersData,childFragmentManager)
         initRecyclerView(adapter,binding)
         model.itemsInStock.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             adapter.submitList(it)

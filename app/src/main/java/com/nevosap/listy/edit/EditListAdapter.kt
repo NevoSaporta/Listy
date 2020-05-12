@@ -67,7 +67,7 @@ class EditListAdapter(context: Context,private var orders:MutableList<GroceryIte
                 }
                 val order =GroceryItemOrderModel(groceryItemModel.id, groceryItemModel, 1)
                 val quantityDialogFragment = SelectQuantityDialogFragment(order, orders!!,binding)
-                quantityDialogFragment.show(FragmentActivity().supportFragmentManager,EditListAdapter::class.java.name)
+                quantityDialogFragment.show(fragmentManager,EditListAdapter::class.java.name)
 
             }
             binding.itemSelected.isChecked = !binding.itemSelected.isChecked

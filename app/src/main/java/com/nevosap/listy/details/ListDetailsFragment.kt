@@ -68,7 +68,7 @@ class ListDetailsFragment:Fragment() {
                     override fun onNegativeClicked() {
                     }
                 })
-                dialog.show(FragmentActivity().supportFragmentManager,ListDetailsFragment::class.java.name)
+                dialog.show(childFragmentManager,ListDetailsFragment::class.java.name)
                 true
             }
             else -> super.onOptionsItemSelected(item)
