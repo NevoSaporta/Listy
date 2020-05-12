@@ -5,6 +5,8 @@ import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryListModel
 
 interface GroceryRepository {
+    fun onClear()
+
     fun getItemsInStock( itemsListener: Listener<MutableList<GroceryItemModel>>)
 
     fun getAllLists(listListener: Listener<MutableList<GroceryListModel>>)

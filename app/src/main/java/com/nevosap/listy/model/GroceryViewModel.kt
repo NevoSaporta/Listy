@@ -10,6 +10,10 @@ import java.util.*
 
 class GroceryViewModel:ViewModel() {
     private val repository = MyGroceryRepository()
+    override fun onCleared() {
+        super.onCleared()
+        repository.onClear()
+    }
 
     private val _itemsInStock :MutableLiveData<MutableList<GroceryItemModel>> by lazy{
         MutableLiveData<MutableList<GroceryItemModel>>().also {

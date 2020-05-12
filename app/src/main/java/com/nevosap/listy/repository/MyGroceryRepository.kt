@@ -10,6 +10,9 @@ import java.util.*
 class MyGroceryRepository ():GroceryRepository {
     private val job =Job()
     private val uiScope = CoroutineScope(job+Dispatchers.Main)
+    override fun onClear() {
+        uiScope.cancel()
+    }
 
     override fun getItemsInStock(itemsListener: Listener<MutableList<GroceryItemModel>>) {
         uiScope.launch {
