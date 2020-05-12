@@ -33,6 +33,12 @@ class ListDetailsFragment:Fragment() {
                 model.navigateEditEnded()
             }
         })
+        model.navigateHome.observe(viewLifecycleOwner , Observer {
+            if(it){
+                findNavController().navigate(ListDetailsFragmentDirections.actionListDetailsFragmentToHomeFragment2())
+                model.navigateHomeEnded()
+            }
+        })
         binding.groceryList =groceryListModel
         setHasOptionsMenu(true)
         initRecyclerView(binding)

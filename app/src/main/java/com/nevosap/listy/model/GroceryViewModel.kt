@@ -101,9 +101,6 @@ class GroceryViewModel:ViewModel() {
     fun editSavePressed(){
         _editSavePressed.value =true
     }
-    fun errorSaving(){
-        _editSavePressed.value =false
-    }
     private fun navigateHome() {
         _navigateHome.value = true
     }
