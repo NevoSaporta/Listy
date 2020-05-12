@@ -124,4 +124,16 @@ class GroceryViewModel:ViewModel() {
         _editSavePressed.value =false
         navigateHome()
     }
+    fun deleteList(groceryListModel: GroceryListModel){
+        repository.deleteList(object :Listener<MutableList<GroceryListModel>>{
+            override fun onSuccess(element: MutableList<GroceryListModel>) {
+                _allLists.postValue(element)
+            }
+
+            override fun onFailure(error: Throwable) {
+                TODO("Not yet implemented")
+            }
+        },groceryListModel)
+        navigateHome()
+    }
 }
