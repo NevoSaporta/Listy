@@ -27,14 +27,24 @@ class MyGroceryRepository ():GroceryRepository {
     }
 
     override fun getAllLists(listListener: Listener<MutableList<GroceryListModel>>) {
-        //TODO("Not yet implemented")
+       uiScope.launch {
+           withContext(Dispatchers.IO){
+               val lists = DatabaseModule.groceryListsDao.getAllLists()
+               listListener.onSuccess(lists)
+           }
+       }
     }
 
     override fun addOrUpdateList(
         listListener: Listener<MutableList<GroceryListModel>>,
         groceryListModel: GroceryListModel
     ) {
-        //TODO("Not yet implemented")
+       uiScope.launch {
+           withContext(Dispatchers.IO){
+               DatabaseModule.groceryListsDao.addOrUpdateList(groceryListModel)
+               listListener.onSuccess(DatabaseModule.groceryListsDao.getAllLists())
+           }
+       }
     }
     private fun getTmpStock ()= mutableListOf(
         GroceryItemModel(1,"milk",1.1),
@@ -42,17 +52,4 @@ class MyGroceryRepository ():GroceryRepository {
         GroceryItemModel(3,"water",3.1)
     )
 
-    private fun getTmpLists():MutableList<GroceryListModel>{
-        val orders :MutableList<GroceryItemOrderModel> = getTmpStock().map{
-            GroceryItemOrderModel(it.id,it,1)
-        }.toMutableList()
-        return mutableListOf(
-            GroceryListModel(
-                1,
-                "temp",
-                Date(System.currentTimeMillis()),
-                orders
-            )
-        )
-    }
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.Entity
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentEditBinding
 import com.nevosap.listy.home.HomeFragment
@@ -61,8 +62,8 @@ class AddEditFragment:Fragment() {
             groceryListModel = if (null == groceryListModel) {
                 //todo auto generate id
                 GroceryListModel(
-                    100, binding.editListName.text.toString(),
-                    Date(System.currentTimeMillis()), adapter.getOrders()
+                    id=0, name =binding.editListName.text.toString(),
+                    creationDate = Date(System.currentTimeMillis()),orders =  adapter.getOrders()
                 )
             } else {
                 GroceryListModel(

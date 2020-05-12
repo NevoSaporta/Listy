@@ -31,7 +31,7 @@ class GroceryViewModel:ViewModel() {
        MutableLiveData<MutableList<GroceryListModel>>().also {
            repository.getAllLists(object :Listener<MutableList<GroceryListModel>>{
                override fun onSuccess(element: MutableList<GroceryListModel>) {
-                   _allLists.value =element
+                   _allLists.postValue(element)
                }
 
                override fun onFailure(error: Throwable) {
@@ -120,7 +120,7 @@ class GroceryViewModel:ViewModel() {
 //        }
          repository.addOrUpdateList(object :Listener<MutableList<GroceryListModel>>{
              override fun onSuccess(element: MutableList<GroceryListModel>) {
-                 _allLists.value =element
+                 _allLists.postValue(element)
              }
 
              override fun onFailure(error: Throwable) {
