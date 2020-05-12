@@ -51,6 +51,11 @@ class ListDetailsFragment:Fragment() {
                 model.editListPressed()
                 true
             }
+            R.id.delete_menu_item ->{
+                val dialog = DeleteListDialogFragment(model,groceryListModel)
+                dialog.show(parentFragmentManager,ListDetailsFragment::class.java.name)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
