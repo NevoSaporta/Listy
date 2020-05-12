@@ -14,7 +14,7 @@ class DeleteListDialogFragment(private val model:GroceryViewModel,private val li
         return activity?.let {
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
-            builder.setTitle(R.string.quantity_dialog_title)
+            builder.setTitle(R.string.delete_dialog_title)
                 .setMessage(R.string.delete_dialog_Message)
                 .setPositiveButton(R.string.delete_dialog_positive,
                     DialogInterface.OnClickListener{ dialog, id ->
