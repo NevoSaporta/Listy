@@ -56,7 +56,7 @@ class ListDetailsFragment:Fragment() {
     }
 
     private fun initRecyclerView(binding: FragmentDetailsBinding) {
-        val adapter = GroceryItemAdapter(context!!)
+        val adapter = GroceryItemAdapter(requireContext())
         binding.detailsRcv.layoutManager = LinearLayoutManager(context)
         binding.detailsRcv.adapter = adapter
         adapter.submitList(groceryListModel.orders)

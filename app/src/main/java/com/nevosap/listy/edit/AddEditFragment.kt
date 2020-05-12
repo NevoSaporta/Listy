@@ -60,7 +60,6 @@ class AddEditFragment:Fragment() {
         if (binding.editListName.text.isNotEmpty()) {
             //new list
             groceryListModel = if (null == groceryListModel) {
-                //todo auto generate id
                 GroceryListModel(
                     id=0, name =binding.editListName.text.toString(),
                     creationDate = Date(System.currentTimeMillis()),orders =  adapter.getOrders()

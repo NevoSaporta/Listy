@@ -1,12 +1,10 @@
 package com.nevosap.listy.model
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nevosap.listy.repository.Listener
 import com.nevosap.listy.repository.MyGroceryRepository
-import java.util.*
 
 class GroceryViewModel:ViewModel() {
     private val repository = MyGroceryRepository()
@@ -114,14 +112,6 @@ class GroceryViewModel:ViewModel() {
         _navigateHome.value =false
     }
     fun addOrUpdateList(groceryListModel: GroceryListModel){
-//        val target =_allLists.value!!.firstOrNull{it.id == groceryListModel.id}
-//        if(null ==target ){
-//            //add
-//            _allLists.value!!.add(groceryListModel)
-//        }else{
-//            _allLists.value!!.remove(target)
-//            _allLists.value!!.add(groceryListModel)
-//        }
          repository.addOrUpdateList(object :Listener<MutableList<GroceryListModel>>{
              override fun onSuccess(element: MutableList<GroceryListModel>) {
                  _allLists.postValue(element)
