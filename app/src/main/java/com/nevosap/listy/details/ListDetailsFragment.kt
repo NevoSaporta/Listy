@@ -33,6 +33,12 @@ class ListDetailsFragment:Fragment() {
                 model.navigateEditEnded()
             }
         })
+        model.navigateHome.observe(viewLifecycleOwner , Observer {
+            if(it){
+                findNavController().navigate(ListDetailsFragmentDirections.actionListDetailsFragmentToHomeFragment2())
+                model.navigateHomeEnded()
+            }
+        })
         binding.groceryList =groceryListModel
         setHasOptionsMenu(true)
         initRecyclerView(binding)
@@ -49,6 +55,11 @@ class ListDetailsFragment:Fragment() {
         return when(item.itemId){
             R.id.edit_menu_item  ->{
                 model.editListPressed()
+                true
+            }
+            R.id.delete_menu_item ->{
+                val dialog = DeleteListDialogFragment(model,groceryListModel)
+                dialog.show(parentFragmentManager,ListDetailsFragment::class.java.name)
                 true
             }
             else -> super.onOptionsItemSelected(item)

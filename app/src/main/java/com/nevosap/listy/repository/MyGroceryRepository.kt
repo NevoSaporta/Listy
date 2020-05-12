@@ -49,6 +49,19 @@ class MyGroceryRepository ():GroceryRepository {
            }
        }
     }
+
+    override fun deleteList(
+        listListener: Listener<MutableList<GroceryListModel>>,
+        groceryListModel: GroceryListModel
+    ) {
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                DatabaseModule.groceryListsDao.deleteList(groceryListModel)
+                listListener.onSuccess(DatabaseModule.groceryListsDao.getAllLists())
+            }
+        }
+    }
+
     private fun getTmpStock ()= mutableListOf(
         GroceryItemModel(1,"milk",1.1),
         GroceryItemModel(2,"meat",2.1),

@@ -50,7 +50,6 @@ class AddEditFragment:Fragment() {
         model.editSavePressed.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if(it){
                 updateList(binding,adapter)
-                model.addOrUpdateList(groceryListModel!!)
             }
         })
         return binding.root
@@ -70,9 +69,10 @@ class AddEditFragment:Fragment() {
                     groceryListModel!!.creationDate, adapter.getOrders()
                 )
             }
+            model.addOrUpdateList(groceryListModel!!)
         } else {
             binding.editListName.error = getString(R.string.edit_list_name_error)
-            model.errorSaving()
+//            model.errorSaving()
         }
     }
 

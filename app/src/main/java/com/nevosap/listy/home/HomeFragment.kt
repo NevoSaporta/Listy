@@ -31,7 +31,7 @@ class HomeFragment:Fragment() {
     ): View? {
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,container,false)
         binding.groceryViewModel = model
-        adapter  = GroceryListAdapter(model, context!!)
+        adapter  = GroceryListAdapter(model, requireContext())
         initRecyclerView(binding,adapter)
         model.navigateNew.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if(it){
@@ -61,50 +61,4 @@ class HomeFragment:Fragment() {
         binding.lifecycleOwner =this
         adapter.submitList(model.allLists.value)
     }
-
-    /*private fun getTempList(): MutableList<GroceryListModel> {
-        return mutableListOf(
-            GroceryListModel(
-                id = 1,
-                name = "List1",
-                creationDate = Date(System.currentTimeMillis()),
-                orders = mutableListOf(
-                    GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Milk",
-                            id = 1,
-                            price = 1.1
-                        ),2
-                    ),
-                    GroceryItemOrderModel(2,
-                        GroceryItemModel(
-                            name = "Meat",
-                            id = 2,
-                            price = 1.1
-                        ),36
-                    ) /*,  GroceryItemOrderModel(1,
-                        GroceryItemModel(
-                            name = "Water",
-                            id = 3,
-                            price = 1.1
-                        ),1
-                    )*/
-                )
-            )
-        )
-    }
-
-    private fun checkForListUpdates():MutableList<GroceryListModel> {
-        val groceryListModel :GroceryListModel?= arguments?.getParcelable(GROCERYLISTMODEL)
-        val tmp = getTempList()
-        groceryListModel?.let {list->
-            if(!tmp.none { it.id == list.id }){
-                val oldList = tmp.first { it.id==list.id }
-                tmp.remove(oldList)
-            }
-            tmp.add(groceryListModel)
-        }
-        return tmp
-    }*/
-
 }

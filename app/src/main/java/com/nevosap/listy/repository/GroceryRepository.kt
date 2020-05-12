@@ -12,4 +12,6 @@ interface GroceryRepository {
     fun getAllLists(listListener: Listener<MutableList<GroceryListModel>>)
 
     fun addOrUpdateList(listListener: Listener<MutableList<GroceryListModel>>,groceryListModel: GroceryListModel)
+
+    fun deleteList(listListener: Listener<MutableList<GroceryListModel>>,groceryListModel: GroceryListModel)
 }
