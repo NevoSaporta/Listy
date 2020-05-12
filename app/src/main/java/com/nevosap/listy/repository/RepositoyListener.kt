@@ -1,6 +1,6 @@
 package com.nevosap.listy.repository
 
-interface Listener<T> {
+interface RepositoyListener<T> {
     fun onSuccess(element:T)
     fun onFailure(error:Throwable)
 }

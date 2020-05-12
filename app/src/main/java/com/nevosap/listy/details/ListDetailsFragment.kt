@@ -59,7 +59,15 @@ class ListDetailsFragment:Fragment() {
                 true
             }
             R.id.delete_menu_item ->{
-                val dialog = DeleteListDialogFragment(model,groceryListModel)
+                val dialog = DeleteListDialogFragment(object :
+                    DeleteListDialogListener {
+                    override fun onPositiveClicked() {
+                        model.deleteList(groceryListModel)
+                    }
+
+                    override fun onNegativeClicked() {
+                    }
+                })
                 dialog.show(FragmentActivity().supportFragmentManager,ListDetailsFragment::class.java.name)
                 true
             }

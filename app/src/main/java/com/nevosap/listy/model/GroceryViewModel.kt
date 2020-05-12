@@ -3,7 +3,7 @@ package com.nevosap.listy.model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.nevosap.listy.repository.Listener
+import com.nevosap.listy.repository.RepositoyListener
 import com.nevosap.listy.repository.MyGroceryRepository
 
 class GroceryViewModel:ViewModel() {
@@ -15,7 +15,7 @@ class GroceryViewModel:ViewModel() {
 
     private val _itemsInStock :MutableLiveData<MutableList<GroceryItemModel>> by lazy{
         MutableLiveData<MutableList<GroceryItemModel>>().also {
-            repository.getItemsInStock(object :Listener<MutableList<GroceryItemModel>>{
+            repository.getItemsInStock(object :RepositoyListener<MutableList<GroceryItemModel>>{
                 override fun onSuccess(element: MutableList<GroceryItemModel>) {
                     _itemsInStock.postValue(element)
                 }
@@ -31,7 +31,7 @@ class GroceryViewModel:ViewModel() {
 
     private val _allLists : MutableLiveData<MutableList<GroceryListModel>> by lazy{
        MutableLiveData<MutableList<GroceryListModel>>().also {
-           repository.getAllLists(object :Listener<MutableList<GroceryListModel>>{
+           repository.getAllLists(object :RepositoyListener<MutableList<GroceryListModel>>{
                override fun onSuccess(element: MutableList<GroceryListModel>) {
                    _allLists.postValue(element)
                }
@@ -109,7 +109,7 @@ class GroceryViewModel:ViewModel() {
         _navigateHome.value =false
     }
     fun addOrUpdateList(groceryListModel: GroceryListModel){
-         repository.addOrUpdateList(object :Listener<MutableList<GroceryListModel>>{
+         repository.addOrUpdateList(object :RepositoyListener<MutableList<GroceryListModel>>{
              override fun onSuccess(element: MutableList<GroceryListModel>) {
                  _allLists.postValue(element)
              }
@@ -122,7 +122,7 @@ class GroceryViewModel:ViewModel() {
         navigateHome()
     }
     fun deleteList(groceryListModel: GroceryListModel){
-        repository.deleteList(object :Listener<MutableList<GroceryListModel>>{
+        repository.deleteList(object :RepositoyListener<MutableList<GroceryListModel>>{
             override fun onSuccess(element: MutableList<GroceryListModel>) {
                 _allLists.postValue(element)
             }

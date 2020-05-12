@@ -1,17 +1,16 @@
 package com.nevosap.listy.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryListModel
 
 interface GroceryRepository {
     fun onClear()
 
-    fun getItemsInStock( itemsListener: Listener<MutableList<GroceryItemModel>>)
+    fun getItemsInStock(itemsRepositoyListener: RepositoyListener<MutableList<GroceryItemModel>>)
 
-    fun getAllLists(listListener: Listener<MutableList<GroceryListModel>>)
+    fun getAllLists(listRepositoyListener: RepositoyListener<MutableList<GroceryListModel>>)
 
-    fun addOrUpdateList(listListener: Listener<MutableList<GroceryListModel>>,groceryListModel: GroceryListModel)
+    fun addOrUpdateList(listRepositoyListener: RepositoyListener<MutableList<GroceryListModel>>, groceryListModel: GroceryListModel)
 
-    fun deleteList(listListener: Listener<MutableList<GroceryListModel>>,groceryListModel: GroceryListModel)
+    fun deleteList(listRepositoyListener: RepositoyListener<MutableList<GroceryListModel>>, groceryListModel: GroceryListModel)
 }
