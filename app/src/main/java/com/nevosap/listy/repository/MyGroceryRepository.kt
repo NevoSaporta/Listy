@@ -1,5 +1,6 @@
 package com.nevosap.listy.repository
 
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -31,27 +32,39 @@ class MyGroceryRepository ():GroceryRepository {
         }
     }
     private fun loadStockFromRemoteDb(){
-        FirebaseModule.itemsRef.addListenerForSingleValueEvent(object:ValueEventListener{
+        FirebaseModule.itemsRef.addChildEventListener(object: ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                val items = mutableListOf<GroceryItemModel>()
-                for(childItem in p0.children){
-                    val id = childItem.key!!.toInt()
-                    val name = childItem.child(FirebaseModule.ITEMS_NAME_PROPERTY).value.toString()
-                    val price = childItem.child(FirebaseModule.ITEMS_PRICE_PROPERTY).value.toString().toDouble()
-                    val itemModel =GroceryItemModel(id,name,price)
-                    items.add(itemModel)
-                }
-                uiScope.launch {
-                    withContext(Dispatchers.IO){
-                        DatabaseModule.groceryItemsDao.updateStock(items)
-                    }
-                }
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                addOrUpdateListInLocal(p0)
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                addOrUpdateListInLocal(p0)
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                TODO("Not yet implemented")
             }
         })
+    }
+
+    private fun addOrUpdateListInLocal(p0: DataSnapshot) {
+        val id = p0.key!!.toInt()
+        val name = p0.child(FirebaseModule.ITEMS_NAME_PROPERTY).value.toString()
+        val price = p0.child(FirebaseModule.ITEMS_PRICE_PROPERTY).value.toString().toDouble()
+        val itemModel = GroceryItemModel(id, name, price)
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                DatabaseModule.groceryItemsDao.updateStock(mutableListOf(itemModel))
+            }
+        }
     }
 
     override fun getAllLists(listRepositoryListener: RepositoyListener<MutableList<GroceryListModel>>) {
