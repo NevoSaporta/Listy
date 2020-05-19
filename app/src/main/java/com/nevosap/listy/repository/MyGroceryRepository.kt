@@ -1,5 +1,7 @@
 package com.nevosap.listy.repository
 
+import android.util.Log
+import android.widget.Toast
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -42,11 +44,11 @@ class MyGroceryRepository ():GroceryRepository {
             }
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                addOrUpdateListInLocal(p0)
+                addOrUpdateStockInLocal(p0)
             }
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                addOrUpdateListInLocal(p0)
+                addOrUpdateStockInLocal(p0)
             }
 
             override fun onChildRemoved(p0: DataSnapshot) {
@@ -55,7 +57,7 @@ class MyGroceryRepository ():GroceryRepository {
         })
     }
 
-    private fun addOrUpdateListInLocal(p0: DataSnapshot) {
+    private fun addOrUpdateStockInLocal(p0: DataSnapshot) {
         val id = p0.key!!.toInt()
         val name = p0.child(FirebaseModule.ITEMS_NAME_PROPERTY).value.toString()
         val price = p0.child(FirebaseModule.ITEMS_PRICE_PROPERTY).value.toString().toDouble()
@@ -80,7 +82,8 @@ class MyGroceryRepository ():GroceryRepository {
         listRepositoryListener: RepositoyListener<MutableList<GroceryListModel>>,
         groceryListModel: GroceryListModel
     ) {
-       uiScope.launch {
+        FirebaseModule.listsRef.child(groceryListModel.id.toString()).setValue(groceryListModel)
+        uiScope.launch {
            withContext(Dispatchers.IO){
                DatabaseModule.groceryListsDao.addOrUpdateList(groceryListModel)
                listRepositoryListener.onSuccess(DatabaseModule.groceryListsDao.getAllLists())

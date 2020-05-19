@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.Auth
 import com.google.firebase.auth.FirebaseAuth
 import com.nevosap.listy.MainActivity
 import com.nevosap.listy.R
+import com.nevosap.listy.networking.FirebaseModule
 
 class UsersActivity:AppCompatActivity() {
     companion object {
@@ -30,9 +31,12 @@ class UsersActivity:AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
                 val user = FirebaseAuth.getInstance().currentUser
+                //setting the user in the network module
+                user?.let {
+                    FirebaseModule.initUser(it)
+                }
                 //starting main activity
                 val userIntent = Intent(this,MainActivity::class.java)
-                userIntent.putExtra(ACTION_SIGN_IN,user)
                 startActivity(userIntent)
                 // ...
             } else {
