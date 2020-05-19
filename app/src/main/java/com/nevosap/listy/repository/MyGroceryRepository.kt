@@ -82,7 +82,19 @@ class MyGroceryRepository ():GroceryRepository {
         listRepositoryListener: RepositoyListener<MutableList<GroceryListModel>>,
         groceryListModel: GroceryListModel
     ) {
-        FirebaseModule.listsRef.child(groceryListModel.id.toString()).setValue(groceryListModel)
+        FirebaseModule.listsRef.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.hasChild(groceryListModel.id.toString())){
+                   //Todo add logic for update
+                }else{
+                    FirebaseModule.listsRef.child(groceryListModel.id.toString()).setValue(groceryListModel)
+                }
+            }
+        })
         uiScope.launch {
            withContext(Dispatchers.IO){
                DatabaseModule.groceryListsDao.addOrUpdateList(groceryListModel)
