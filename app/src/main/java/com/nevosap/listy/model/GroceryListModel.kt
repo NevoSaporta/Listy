@@ -3,6 +3,7 @@ package com.nevosap.listy.model
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.firebase.database.Exclude
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -16,3 +17,15 @@ data class GroceryListModel (
     val orders: MutableList<GroceryItemOrderModel>,
     val users: MutableList<String> = mutableListOf()
 ):Parcelable
+{
+    @Exclude
+    fun toMap():Map<String,Any>{
+        return mapOf(
+            "id" to id,
+            "name" to name,
+            "creationDate" to creationDate,
+            "orders" to orders,
+            "users" to users
+        )
+    }
+}
