@@ -111,7 +111,6 @@ class MyGroceryRepository ():GroceryRepository {
         if(!groceryListModel.users.contains(user.uid)){
             groceryListModel.users.add(user.uid)
         }
-        updateListInRemoteDB(groceryListModel)
         updateListInLocalDB(groceryListModel, listRepositoryListener)
     }
 
@@ -141,12 +140,13 @@ class MyGroceryRepository ():GroceryRepository {
     private fun updateListInLocalDB(groceryListModel: GroceryListModel, listRepositoryListener: RepositoyListener<MutableList<GroceryListModel>>) {
         uiScope.launch {
             withContext(Dispatchers.IO) {
-                DatabaseModule.groceryListsDao.addOrUpdateList(groceryListModel)
+                val id =DatabaseModule.groceryListsDao.addOrUpdateList(groceryListModel)
                 val lists =DatabaseModule.groceryListsDao.getAllLists()
                 lists.removeAll{
                         !it.users.contains(FirebaseAuth.getInstance().currentUser!!.uid)
                     }
                 listRepositoryListener.onSuccess(lists)
+                updateListInRemoteDB(GroceryListModel(id.toInt(),groceryListModel.name,groceryListModel.creationDate,groceryListModel.orders,groceryListModel.users))
             }
         }
     }

@@ -11,7 +11,7 @@ import java.util.*
 @Entity
 data class GroceryListModel (
     @PrimaryKey(autoGenerate = true)
-    val id:Int =1,
+    val id: Int,
     val name :String ="",
     val creationDate: Date,
     val orders: MutableList<GroceryItemOrderModel>,

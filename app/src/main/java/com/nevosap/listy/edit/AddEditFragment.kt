@@ -62,7 +62,7 @@ class AddEditFragment:Fragment() {
             //new list
             groceryListModel = if (null == groceryListModel) {
                 GroceryListModel(
-                     name =binding.editListName.text.toString(),
+                     0, name =binding.editListName.text.toString(),
                     creationDate = Date(System.currentTimeMillis()),orders =  adapter.getOrders()
                 )
             } else {
@@ -71,7 +71,6 @@ class AddEditFragment:Fragment() {
                     groceryListModel!!.creationDate, adapter.getOrders()
                 )
             }
-            Toast.makeText(activity,groceryListModel!!.id.toString(),Toast.LENGTH_LONG).show()
             model.addOrUpdateList(groceryListModel!!)
         } else {
             binding.editListName.error = getString(R.string.edit_list_name_error)

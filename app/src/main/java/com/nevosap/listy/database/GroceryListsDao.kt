@@ -10,7 +10,7 @@ interface GroceryListsDao {
     fun getAllLists():MutableList<GroceryListModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addOrUpdateList(groceryListModel: GroceryListModel)
+    fun addOrUpdateList(groceryListModel: GroceryListModel):Long
 
     @Delete
     fun deleteList(groceryListModel: GroceryListModel)
