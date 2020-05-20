@@ -23,4 +23,12 @@ class Converters {
     fun fromStringToOrders(json:String):MutableList<GroceryItemOrderModel>{
         return Gson().fromJson(json, object: TypeToken<MutableList<GroceryItemOrderModel>>(){}.type)
     }
+    @TypeConverter
+    fun fromUsersToString(users:MutableList<String>):String{
+        return Gson().toJson(users)
+    }
+    @TypeConverter
+    fun fromStringToUsers(json: String):MutableList<String>{
+        return Gson().fromJson(json,object :TypeToken<MutableList<String>>(){}.type)
+    }
 }

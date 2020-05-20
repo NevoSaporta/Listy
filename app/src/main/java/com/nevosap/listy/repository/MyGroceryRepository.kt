@@ -82,25 +82,34 @@ class MyGroceryRepository ():GroceryRepository {
         listRepositoryListener: RepositoyListener<MutableList<GroceryListModel>>,
         groceryListModel: GroceryListModel
     ) {
-        FirebaseModule.listsRef.addListenerForSingleValueEvent(object:ValueEventListener{
+        updateListInRemoteDB(groceryListModel)
+        updateListInLocalDB(groceryListModel, listRepositoryListener)
+    }
+
+    private fun updateListInRemoteDB(groceryListModel: GroceryListModel) {
+        FirebaseModule.listsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                if(p0.hasChild(groceryListModel.id.toString())){
-                   //Todo add logic for update
-                }else{
-                    FirebaseModule.listsRef.child(groceryListModel.id.toString()).setValue(groceryListModel)
+                if (p0.hasChild(groceryListModel.id.toString())) {
+                    //Todo add logic for update
+                } else {
+                    FirebaseModule.listsRef.child(groceryListModel.id.toString())
+                        .setValue(groceryListModel)
                 }
             }
         })
+    }
+
+    private fun updateListInLocalDB(groceryListModel: GroceryListModel, listRepositoryListener: RepositoyListener<MutableList<GroceryListModel>>) {
         uiScope.launch {
-           withContext(Dispatchers.IO){
-               DatabaseModule.groceryListsDao.addOrUpdateList(groceryListModel)
-               listRepositoryListener.onSuccess(DatabaseModule.groceryListsDao.getAllLists())
-           }
-       }
+            withContext(Dispatchers.IO) {
+                DatabaseModule.groceryListsDao.addOrUpdateList(groceryListModel)
+                listRepositoryListener.onSuccess(DatabaseModule.groceryListsDao.getAllLists())
+            }
+        }
     }
 
     override fun deleteList(

@@ -13,5 +13,6 @@ data class GroceryListModel (
     val id:Int,
     val name :String ="",
     val creationDate: Date,
-    val orders: MutableList<GroceryItemOrderModel>
+    val orders: MutableList<GroceryItemOrderModel>,
+    val users: MutableList<String> = mutableListOf()
 ):Parcelable
