@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentEditBinding
 import com.nevosap.listy.home.HomeFragment
@@ -60,7 +62,7 @@ class AddEditFragment:Fragment() {
             //new list
             groceryListModel = if (null == groceryListModel) {
                 GroceryListModel(
-                    id=0, name =binding.editListName.text.toString(),
+                     name =binding.editListName.text.toString(),
                     creationDate = Date(System.currentTimeMillis()),orders =  adapter.getOrders()
                 )
             } else {
@@ -69,6 +71,7 @@ class AddEditFragment:Fragment() {
                     groceryListModel!!.creationDate, adapter.getOrders()
                 )
             }
+            Toast.makeText(activity,groceryListModel!!.id.toString(),Toast.LENGTH_LONG).show()
             model.addOrUpdateList(groceryListModel!!)
         } else {
             binding.editListName.error = getString(R.string.edit_list_name_error)

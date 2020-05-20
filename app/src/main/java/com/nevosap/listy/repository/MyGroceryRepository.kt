@@ -2,10 +2,12 @@ package com.nevosap.listy.repository
 
 import android.util.Log
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 import com.nevosap.listy.database.DatabaseModule
 import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryListModel
@@ -30,6 +32,7 @@ class MyGroceryRepository ():GroceryRepository {
     }
     private fun loadStockFromLocalDb(itemsRepositoryListener: RepositoyListener<MutableList<GroceryItemModel>>) {
         val items = DatabaseModule.groceryItemsDao.getItemsInStock()
+        //for init
         if (items.count()==0) {
             items.addAll(loadStockFromRemoteDb())
         }
@@ -90,6 +93,10 @@ class MyGroceryRepository ():GroceryRepository {
        uiScope.launch {
            withContext(Dispatchers.IO){
                val lists = DatabaseModule.groceryListsDao.getAllLists()
+               //todo optimization
+               lists.removeAll{
+                   !it.users.contains(FirebaseAuth.getInstance().currentUser!!.uid)
+               }
                listRepositoryListener.onSuccess(lists)
            }
        }
@@ -99,6 +106,11 @@ class MyGroceryRepository ():GroceryRepository {
         listRepositoryListener: RepositoyListener<MutableList<GroceryListModel>>,
         groceryListModel: GroceryListModel
     ) {
+        //add user
+        val user =FirebaseAuth.getInstance().currentUser!!
+        if(!groceryListModel.users.contains(user.uid)){
+            groceryListModel.users.add(user.uid)
+        }
         updateListInRemoteDB(groceryListModel)
         updateListInLocalDB(groceryListModel, listRepositoryListener)
     }
@@ -110,15 +122,16 @@ class MyGroceryRepository ():GroceryRepository {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                if (p0.hasChild(groceryListModel.id.toString())) {
+                val listKey = groceryListModel.id.toString()+FirebaseAuth.getInstance().currentUser!!.uid
+                if (p0.hasChild(listKey)) {
                     //update list
                     val listValues = groceryListModel.toMap()
                     val childUpdates = HashMap<String, Any>()
-                    childUpdates["/${groceryListModel.id}"] = listValues
+                    childUpdates["/${listKey}"] = listValues
                     FirebaseModule.listsRef.updateChildren(childUpdates)
                 } else {
                     //new list
-                    FirebaseModule.listsRef.child(groceryListModel.id.toString())
+                    FirebaseModule.listsRef.child(listKey)
                         .setValue(groceryListModel)
                 }
             }
@@ -129,7 +142,11 @@ class MyGroceryRepository ():GroceryRepository {
         uiScope.launch {
             withContext(Dispatchers.IO) {
                 DatabaseModule.groceryListsDao.addOrUpdateList(groceryListModel)
-                listRepositoryListener.onSuccess(DatabaseModule.groceryListsDao.getAllLists())
+                val lists =DatabaseModule.groceryListsDao.getAllLists()
+                lists.removeAll{
+                        !it.users.contains(FirebaseAuth.getInstance().currentUser!!.uid)
+                    }
+                listRepositoryListener.onSuccess(lists)
             }
         }
     }

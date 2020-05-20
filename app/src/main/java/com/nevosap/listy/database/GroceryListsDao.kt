@@ -1,6 +1,7 @@
 package com.nevosap.listy.database
 
 import androidx.room.*
+import com.google.firebase.auth.FirebaseUser
 import com.nevosap.listy.model.GroceryListModel
 
 @Dao
