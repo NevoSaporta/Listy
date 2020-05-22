@@ -16,7 +16,6 @@ import com.nevosap.listy.networking.FirebaseModule
 class UsersActivity:AppCompatActivity() {
     companion object {
         private const val RC_SIGN_IN = 123
-        const val ACTION_SIGN_IN = "com.nevosap.listy.users.UsersActivity"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

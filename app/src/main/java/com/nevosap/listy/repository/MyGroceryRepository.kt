@@ -95,7 +95,7 @@ class MyGroceryRepository ():GroceryRepository {
                val lists = DatabaseModule.groceryListsDao.getAllLists()
                //todo optimization
                lists.removeAll{
-                   !it.users.contains(FirebaseAuth.getInstance().currentUser!!.uid)
+                   !it.users.contains(FirebaseModule.user.uid)
                }
                listRepositoryListener.onSuccess(lists)
            }
@@ -107,7 +107,7 @@ class MyGroceryRepository ():GroceryRepository {
         groceryListModel: GroceryListModel
     ) {
         //add user
-        val user =FirebaseAuth.getInstance().currentUser!!
+        val user =FirebaseModule.user
         if(!groceryListModel.users.contains(user.uid)){
             groceryListModel.users.add(user.uid)
         }
@@ -121,7 +121,7 @@ class MyGroceryRepository ():GroceryRepository {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                val listKey = groceryListModel.id.toString()+FirebaseAuth.getInstance().currentUser!!.uid
+                val listKey = groceryListModel.id.toString()+FirebaseModule.user.uid
                 if (p0.hasChild(listKey)) {
                     //update list
                     val listValues = groceryListModel.toMap()
@@ -143,7 +143,7 @@ class MyGroceryRepository ():GroceryRepository {
                 val id =DatabaseModule.groceryListsDao.addOrUpdateList(groceryListModel)
                 val lists =DatabaseModule.groceryListsDao.getAllLists()
                 lists.removeAll{
-                        !it.users.contains(FirebaseAuth.getInstance().currentUser!!.uid)
+                        !it.users.contains(FirebaseModule.user.uid)
                     }
                 listRepositoryListener.onSuccess(lists)
                 updateListInRemoteDB(GroceryListModel(id.toInt(),groceryListModel.name,groceryListModel.creationDate,groceryListModel.orders,groceryListModel.users))
