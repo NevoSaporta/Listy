@@ -1,18 +1,17 @@
 package com.nevosap.listy.repository
 
-import android.util.Log
-import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.ktx.Firebase
 import com.nevosap.listy.database.DatabaseModule
 import com.nevosap.listy.model.GroceryItemModel
+import com.nevosap.listy.model.GroceryItemOrderModel
 import com.nevosap.listy.model.GroceryListModel
 import com.nevosap.listy.networking.FirebaseModule
 import kotlinx.coroutines.*
+import java.util.*
+import kotlin.collections.HashMap
 
 class MyGroceryRepository ():GroceryRepository {
     private val job =Job()
@@ -53,6 +52,7 @@ class MyGroceryRepository ():GroceryRepository {
         return newItems
     }
     private fun checkForUpdatesInRemote(){
+        //Items
         FirebaseModule.itemsRef.addChildEventListener(object: ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("Not yet implemented")
@@ -74,6 +74,56 @@ class MyGroceryRepository ():GroceryRepository {
                 TODO("Not yet implemented")
             }
         })
+        //lists
+        FirebaseModule.listsRef.addChildEventListener(object : ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                addOrUpdateListInLocal(p0)
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                addOrUpdateListInLocal(p0)
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    private fun addOrUpdateListInLocal(p0: DataSnapshot) {
+        //todo extarct consts
+        val id = p0.child("id").value.toString().toInt()
+        val name =p0.child(("name")).value.toString()
+        val timeInMils = p0.child("creationDate").child("time").value.toString().toLong()
+        val creationDate = Date(timeInMils)
+        val users = mutableListOf<String>()
+        for (user in p0.child("users").children){
+            users.add(user.value.toString())
+        }
+        val orders = mutableListOf<GroceryItemOrderModel>()
+        for (order in p0.child("orders").children){
+            val id = order.child("id").value.toString().toInt()
+            val quantity = order.child("quantity").value.toString().toInt()
+            val idItem =order.child("item").child("id").value.toString().toInt()
+            val nameItem =order.child("item").child("name").value.toString()
+            val priceItem =order.child("item").child("price").value.toString().toDouble()
+            val item = GroceryItemModel(idItem,nameItem,priceItem)
+            orders.add(GroceryItemOrderModel(id,item,quantity))
+        }
+        val list = GroceryListModel(id,name,creationDate,orders,users)
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                DatabaseModule.groceryListsDao.addOrUpdateList(list)
+            }
+        }
     }
 
     private fun addOrUpdateStockInLocal(p0: DataSnapshot):GroceryItemModel {
