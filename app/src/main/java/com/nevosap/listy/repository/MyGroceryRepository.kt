@@ -1,5 +1,7 @@
 package com.nevosap.listy.repository
 
+import android.os.Debug
+import android.util.Log
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -13,16 +15,19 @@ import kotlinx.coroutines.*
 import java.util.*
 import kotlin.collections.HashMap
 
-class MyGroceryRepository ():GroceryRepository {
+class MyGroceryRepository (private val listRepositoryListener: RepositoyListener<MutableList<GroceryListModel>>,private val itemsRepositoryListener: RepositoyListener<MutableList<GroceryItemModel>>):GroceryRepository {
     private val job =Job()
     private val uiScope = CoroutineScope(job+Dispatchers.Main)
+
+    init{
+        checkForItemUpdates()
+        checkForListsUpdates()
+    }
     override fun onClear() {
         uiScope.cancel()
     }
-    init {
-        checkForUpdatesInRemote()
-    }
-    override fun getItemsInStock(itemsRepositoryListener: RepositoyListener<MutableList<GroceryItemModel>>) {
+
+    override fun getItemsInStock() {
         uiScope.launch {
             withContext(Dispatchers.IO){
                 loadStockFromLocalDb(itemsRepositoryListener)
@@ -32,26 +37,9 @@ class MyGroceryRepository ():GroceryRepository {
     private fun loadStockFromLocalDb(itemsRepositoryListener: RepositoyListener<MutableList<GroceryItemModel>>) {
         val items = DatabaseModule.groceryItemsDao.getItemsInStock()
         //for init
-        if (items.count()==0) {
-            items.addAll(loadStockFromRemoteDb())
-        }
         itemsRepositoryListener.onSuccess(items)
     }
-    private fun loadStockFromRemoteDb(): MutableList<GroceryItemModel> {
-        val newItems = mutableListOf<GroceryItemModel>()
-        FirebaseModule.listsRef.addListenerForSingleValueEvent(object :ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-            override fun onDataChange(p0: DataSnapshot) {
-                for( child in p0.children){
-                    newItems.add(addOrUpdateStockInLocal(p0))
-                }
-            }
-        })
-        return newItems
-    }
-    private fun checkForUpdatesInRemote(){
+    private fun checkForItemUpdates(){
         //Items
         FirebaseModule.itemsRef.addChildEventListener(object: ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
@@ -74,6 +62,8 @@ class MyGroceryRepository ():GroceryRepository {
                 TODO("Not yet implemented")
             }
         })
+    }
+    private fun checkForListsUpdates(){
         //lists
         FirebaseModule.listsRef.addChildEventListener(object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
@@ -99,6 +89,7 @@ class MyGroceryRepository ():GroceryRepository {
     }
 
     private fun addOrUpdateListInLocal(p0: DataSnapshot) {
+
         //todo extarct consts
         val id = p0.child("id").value.toString().toInt()
         val name =p0.child(("name")).value.toString()
@@ -110,18 +101,24 @@ class MyGroceryRepository ():GroceryRepository {
         }
         val orders = mutableListOf<GroceryItemOrderModel>()
         for (order in p0.child("orders").children){
-            val id = order.child("id").value.toString().toInt()
+            val orderId = order.child("id").value.toString().toInt()
             val quantity = order.child("quantity").value.toString().toInt()
             val idItem =order.child("item").child("id").value.toString().toInt()
             val nameItem =order.child("item").child("name").value.toString()
             val priceItem =order.child("item").child("price").value.toString().toDouble()
             val item = GroceryItemModel(idItem,nameItem,priceItem)
-            orders.add(GroceryItemOrderModel(id,item,quantity))
+            orders.add(GroceryItemOrderModel(orderId,item,quantity))
         }
         val list = GroceryListModel(id,name,creationDate,orders,users)
         uiScope.launch {
             withContext(Dispatchers.IO) {
                 DatabaseModule.groceryListsDao.addOrUpdateList(list)
+                //todo opt
+                val newLists = DatabaseModule.groceryListsDao.getAllLists()
+                newLists.removeAll { !it.users.contains(FirebaseModule.user.uid) }
+                listRepositoryListener.onSuccess( newLists)
+
+
             }
         }
     }
@@ -139,7 +136,7 @@ class MyGroceryRepository ():GroceryRepository {
         return itemModel
     }
 
-    override fun getAllLists(listRepositoryListener: RepositoyListener<MutableList<GroceryListModel>>) {
+    override fun getAllLists() {
        uiScope.launch {
            withContext(Dispatchers.IO){
                val lists = DatabaseModule.groceryListsDao.getAllLists()
@@ -152,10 +149,7 @@ class MyGroceryRepository ():GroceryRepository {
        }
     }
 
-    override fun addOrUpdateList(
-        listRepositoryListener: RepositoyListener<MutableList<GroceryListModel>>,
-        groceryListModel: GroceryListModel
-    ) {
+    override fun addOrUpdateList(groceryListModel: GroceryListModel) {
         //add user
         val user =FirebaseModule.user
         if(!groceryListModel.users.contains(user.uid)){
@@ -195,16 +189,14 @@ class MyGroceryRepository ():GroceryRepository {
                 lists.removeAll{
                         !it.users.contains(FirebaseModule.user.uid)
                     }
-                listRepositoryListener.onSuccess(lists)
+                //adding list with the nauto generated key
                 updateListInRemoteDB(GroceryListModel(id.toInt(),groceryListModel.name,groceryListModel.creationDate,groceryListModel.orders,groceryListModel.users))
+                listRepositoryListener.onSuccess(lists)
             }
         }
     }
 
-    override fun deleteList(
-        listRepositoryListener: RepositoyListener<MutableList<GroceryListModel>>,
-        groceryListModel: GroceryListModel
-    ) {
+    override fun deleteList(groceryListModel: GroceryListModel) {
         uiScope.launch {
             withContext(Dispatchers.IO){
                 DatabaseModule.groceryListsDao.deleteList(groceryListModel)

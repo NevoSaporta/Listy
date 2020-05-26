@@ -7,7 +7,26 @@ import com.nevosap.listy.repository.RepositoyListener
 import com.nevosap.listy.repository.MyGroceryRepository
 
 class GroceryViewModel:ViewModel() {
-    private val repository = MyGroceryRepository()
+    private val itemsListener =object :RepositoyListener<MutableList<GroceryItemModel>>{
+        override fun onSuccess(element: MutableList<GroceryItemModel>) {
+            _itemsInStock.postValue(element)
+        }
+
+        override fun onFailure(error: Throwable) {
+            TODO("Not yet implemented")
+        }
+    }
+    private val listListener =object :RepositoyListener<MutableList<GroceryListModel>>{
+        override fun onSuccess(element: MutableList<GroceryListModel>) {
+            _allLists.postValue(element)
+        }
+
+        override fun onFailure(error: Throwable) {
+            TODO("Not yet implemented")
+        }
+    }
+
+    private val repository = MyGroceryRepository(listListener,itemsListener)
     override fun onCleared() {
         super.onCleared()
         repository.onClear()
@@ -15,15 +34,7 @@ class GroceryViewModel:ViewModel() {
 
     private val _itemsInStock :MutableLiveData<MutableList<GroceryItemModel>> by lazy{
         MutableLiveData<MutableList<GroceryItemModel>>().also {
-            repository.getItemsInStock(object :RepositoyListener<MutableList<GroceryItemModel>>{
-                override fun onSuccess(element: MutableList<GroceryItemModel>) {
-                    _itemsInStock.postValue(element)
-                }
-
-                override fun onFailure(error: Throwable) {
-                    TODO("Not yet implemented")
-                }
-            })
+            repository.getItemsInStock()
         }
     }
     val itemsInStock : LiveData<MutableList<GroceryItemModel>>
@@ -31,15 +42,7 @@ class GroceryViewModel:ViewModel() {
 
     private val _allLists : MutableLiveData<MutableList<GroceryListModel>> by lazy{
        MutableLiveData<MutableList<GroceryListModel>>().also {
-           repository.getAllLists(object :RepositoyListener<MutableList<GroceryListModel>>{
-               override fun onSuccess(element: MutableList<GroceryListModel>) {
-                   _allLists.postValue(element)
-               }
-
-               override fun onFailure(error: Throwable) {
-                   TODO("Not yet implemented")
-               }
-           })
+           repository.getAllLists()
        }
     }
     val  allLists: LiveData<MutableList<GroceryListModel>>
@@ -109,28 +112,12 @@ class GroceryViewModel:ViewModel() {
         _navigateHome.value =false
     }
     fun addOrUpdateList(groceryListModel: GroceryListModel){
-         repository.addOrUpdateList(object :RepositoyListener<MutableList<GroceryListModel>>{
-             override fun onSuccess(element: MutableList<GroceryListModel>) {
-                 _allLists.postValue(element)
-             }
-
-             override fun onFailure(error: Throwable) {
-                 TODO("Not yet implemented")
-             }
-         },groceryListModel)
+         repository.addOrUpdateList(groceryListModel)
         _editSavePressed.value =false
         navigateHome()
     }
     fun deleteList(groceryListModel: GroceryListModel){
-        repository.deleteList(object :RepositoyListener<MutableList<GroceryListModel>>{
-            override fun onSuccess(element: MutableList<GroceryListModel>) {
-                _allLists.postValue(element)
-            }
-
-            override fun onFailure(error: Throwable) {
-                TODO("Not yet implemented")
-            }
-        },groceryListModel)
+        repository.deleteList(groceryListModel)
         navigateHome()
     }
 }
