@@ -199,8 +199,13 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
     override fun deleteList(groceryListModel: GroceryListModel) {
         uiScope.launch {
             withContext(Dispatchers.IO){
+                //todo delete in remote
                 DatabaseModule.groceryListsDao.deleteList(groceryListModel)
-                listRepositoryListener.onSuccess(DatabaseModule.groceryListsDao.getAllLists())
+                val newLists =DatabaseModule.groceryListsDao.getAllLists()
+                newLists.removeAll{
+                    !it.users.contains(FirebaseModule.user.uid)
+                }
+                listRepositoryListener.onSuccess(newLists)
             }
         }
     }
