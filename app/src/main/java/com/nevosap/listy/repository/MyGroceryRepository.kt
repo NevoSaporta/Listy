@@ -1,7 +1,5 @@
 package com.nevosap.listy.repository
 
-import android.os.Debug
-import android.util.Log
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -83,33 +81,15 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
             }
 
             override fun onChildRemoved(p0: DataSnapshot) {
-                TODO("Not yet implemented")
+                deleteListInLocal(listFromSnapshot(p0))
             }
         })
     }
 
     private fun addOrUpdateListInLocal(p0: DataSnapshot) {
+        val list = listFromSnapshot(p0)
 
-        //todo extarct consts
-        val id = p0.child("id").value.toString().toInt()
-        val name =p0.child(("name")).value.toString()
-        val timeInMils = p0.child("creationDate").child("time").value.toString().toLong()
-        val creationDate = Date(timeInMils)
-        val users = mutableListOf<String>()
-        for (user in p0.child("users").children){
-            users.add(user.value.toString())
-        }
-        val orders = mutableListOf<GroceryItemOrderModel>()
-        for (order in p0.child("orders").children){
-            val orderId = order.child("id").value.toString().toInt()
-            val quantity = order.child("quantity").value.toString().toInt()
-            val idItem =order.child("item").child("id").value.toString().toInt()
-            val nameItem =order.child("item").child("name").value.toString()
-            val priceItem =order.child("item").child("price").value.toString().toDouble()
-            val item = GroceryItemModel(idItem,nameItem,priceItem)
-            orders.add(GroceryItemOrderModel(orderId,item,quantity))
-        }
-        val list = GroceryListModel(id,name,creationDate,orders,users)
+
         uiScope.launch {
             withContext(Dispatchers.IO) {
                 DatabaseModule.groceryListsDao.addOrUpdateList(list)
@@ -121,6 +101,29 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
 
             }
         }
+    }
+
+    private fun listFromSnapshot(p0: DataSnapshot): GroceryListModel {
+        //todo extarct consts
+        val id = p0.child("id").value.toString().toInt()
+        val name = p0.child(("name")).value.toString()
+        val timeInMils = p0.child("creationDate").child("time").value.toString().toLong()
+        val creationDate = Date(timeInMils)
+        val users = mutableListOf<String>()
+        for (user in p0.child("users").children) {
+            users.add(user.value.toString())
+        }
+        val orders = mutableListOf<GroceryItemOrderModel>()
+        for (order in p0.child("orders").children) {
+            val orderId = order.child("id").value.toString().toInt()
+            val quantity = order.child("quantity").value.toString().toInt()
+            val idItem = order.child("item").child("id").value.toString().toInt()
+            val nameItem = order.child("item").child("name").value.toString()
+            val priceItem = order.child("item").child("price").value.toString().toDouble()
+            val item = GroceryItemModel(idItem, nameItem, priceItem)
+            orders.add(GroceryItemOrderModel(orderId, item, quantity))
+        }
+        return GroceryListModel(id, name, creationDate, orders, users)
     }
 
     private fun addOrUpdateStockInLocal(p0: DataSnapshot):GroceryItemModel {
@@ -189,7 +192,7 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
                 lists.removeAll{
                         !it.users.contains(FirebaseModule.user.uid)
                     }
-                //adding list with the nauto generated key
+                //adding list with the auto generated key
                 updateListInRemoteDB(GroceryListModel(id.toInt(),groceryListModel.name,groceryListModel.creationDate,groceryListModel.orders,groceryListModel.users))
                 listRepositoryListener.onSuccess(lists)
             }
@@ -197,16 +200,26 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
     }
 
     override fun deleteList(groceryListModel: GroceryListModel) {
+        deleteListInLocal(groceryListModel)
+        deleteListInRemote(groceryListModel)
+    }
+
+    private fun deleteListInLocal(groceryListModel: GroceryListModel) {
         uiScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 //todo delete in remote
                 DatabaseModule.groceryListsDao.deleteList(groceryListModel)
-                val newLists =DatabaseModule.groceryListsDao.getAllLists()
-                newLists.removeAll{
+                val newLists = DatabaseModule.groceryListsDao.getAllLists()
+                newLists.removeAll {
                     !it.users.contains(FirebaseModule.user.uid)
                 }
                 listRepositoryListener.onSuccess(newLists)
             }
         }
+    }
+
+    private fun deleteListInRemote(groceryListModel: GroceryListModel) {
+        val key = groceryListModel.id.toString()+groceryListModel.users[0]
+        FirebaseModule.listsRef.child(key).removeValue()
     }
 }
