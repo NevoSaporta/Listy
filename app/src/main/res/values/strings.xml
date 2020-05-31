@@ -17,4 +17,5 @@
     <string name="delete_dialog_Message">Are you sure you want to delete this list?</string>
     <string name="delete_menu_item">Delete</string>
     <string name="sign_in_failed">Failed to sign in</string>
+    <string name="sign_out_menu_item">Sign out</string>
 </resources>
