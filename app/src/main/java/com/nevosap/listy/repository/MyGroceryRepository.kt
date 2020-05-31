@@ -217,7 +217,6 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
             }
         }
     }
-
     private fun deleteListInRemote(groceryListModel: GroceryListModel) {
         val key = groceryListModel.id.toString()+groceryListModel.users[0]
         FirebaseModule.listsRef.child(key).removeValue()

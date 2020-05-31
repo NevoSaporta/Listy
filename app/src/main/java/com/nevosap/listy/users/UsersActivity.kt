@@ -19,7 +19,13 @@ class UsersActivity:AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startSignFlow()
+        if (FirebaseAuth.getInstance().currentUser!=null){
+            FirebaseModule.initUser(FirebaseAuth.getInstance().currentUser!!)
+            val userIntent = Intent(this,MainActivity::class.java)
+            startActivity(userIntent)
+        }else{
+            startSignFlow()
+        }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
