@@ -21,15 +21,6 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout = binding.drawerLayout
         val navController = this.findNavController(R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this,navController,drawerLayout)
-        NavigationUI.setupActionBarWithNavController(this,navController,drawerLayout)
-        // prevent nav gesture if not on start destination
-        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
-            if (nd.id == nc.graph.startDestination) {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            } else {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-            }
-        }
         NavigationUI.setupWithNavController(binding.navigation, navController)
     }
     override fun onSupportNavigateUp(): Boolean {
