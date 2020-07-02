@@ -1,5 +1,7 @@
 package com.nevosap.listy.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentHomeBinding
-import com.nevosap.listy.model.GroceryItemModel
-import com.nevosap.listy.model.GroceryItemOrderModel
-import com.nevosap.listy.model.GroceryListModel
 import com.nevosap.listy.model.GroceryViewModel
-import java.util.*
+
 
 class HomeFragment:Fragment() {
     //Shared vm for all the fragments in the activity
@@ -51,6 +51,18 @@ class HomeFragment:Fragment() {
         model.allLists.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             adapter.submitList(it)
         })
+        /*
+        val builder = FirebaseDynamicLinks.getInstance().createDynamicLink()
+            .setLink(Uri.parse( "https://listyapp.page.link"))
+            .setDomainUriPrefix("https://listyapp.page.link")
+
+        val link = builder.buildDynamicLink()
+        val sendIntent = Intent()
+        val msg = "Hey, check this out: ${link.uri}"
+        sendIntent.action = Intent.ACTION_SEND
+        sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
+        sendIntent.type = "text/plain"
+        startActivity(sendIntent)*/
         return binding.root
     }
 
