@@ -13,4 +13,6 @@ interface GroceryRepository {
     fun addOrUpdateList(groceryListModel: GroceryListModel)
 
     fun deleteList(groceryListModel: GroceryListModel)
+
+    fun shareList(key: String)
 }

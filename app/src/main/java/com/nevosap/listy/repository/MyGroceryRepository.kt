@@ -207,6 +207,10 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
         deleteListInRemote(groceryListModel)
     }
 
+    override fun shareList(key: String) {
+        TODO("Not yet implemented")
+    }
+
     private fun deleteListInLocal(groceryListModel: GroceryListModel) {
         uiScope.launch {
             withContext(Dispatchers.IO) {

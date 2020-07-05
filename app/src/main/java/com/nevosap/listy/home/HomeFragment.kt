@@ -51,18 +51,6 @@ class HomeFragment:Fragment() {
         model.allLists.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             adapter.submitList(it)
         })
-        /*
-        val builder = FirebaseDynamicLinks.getInstance().createDynamicLink()
-            .setLink(Uri.parse( "https://listyapp.page.link"))
-            .setDomainUriPrefix("https://listyapp.page.link")
-
-        val link = builder.buildDynamicLink()
-        val sendIntent = Intent()
-        val msg = "Hey, check this out: ${link.uri}"
-        sendIntent.action = Intent.ACTION_SEND
-        sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
-        sendIntent.type = "text/plain"
-        startActivity(sendIntent)*/
         return binding.root
     }
 
