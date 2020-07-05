@@ -1,5 +1,6 @@
 package com.nevosap.listy.repository
 
+import android.content.Context
 import com.nevosap.listy.model.GroceryItemModel
 import com.nevosap.listy.model.GroceryListModel
 
@@ -14,5 +15,5 @@ interface GroceryRepository {
 
     fun deleteList(groceryListModel: GroceryListModel)
 
-    fun shareList(key: String)
+    fun shareList(key: String,context : Context)
 }

@@ -1,6 +1,9 @@
 package com.nevosap.listy.repository
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -207,8 +210,18 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
         deleteListInRemote(groceryListModel)
     }
 
-    override fun shareList(key: String) {
-        TODO("Not yet implemented")
+    override fun shareList(key: String,context :Context) {
+         val builder = FirebaseDynamicLinks.getInstance().createDynamicLink()
+             .setLink(Uri.parse( "https://listyapp.page.link"))
+             .setDomainUriPrefix("https://listyapp.page.link")
+
+         val link = builder.buildDynamicLink()
+         val sendIntent = Intent()
+         val msg = "Hey, check this out: ${link.uri}"
+         sendIntent.action = Intent.ACTION_SEND
+         sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
+         sendIntent.type = "text/plain"
+         context.startActivity(sendIntent)
     }
 
     private fun deleteListInLocal(groceryListModel: GroceryListModel) {
