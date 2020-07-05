@@ -70,6 +70,12 @@ class ListDetailsFragment:Fragment() {
                 dialog.show(childFragmentManager,ListDetailsFragment::class.java.name)
                 true
             }
+            R.id.share_menu_item ->{
+                val key = groceryListModel.id.toString()+groceryListModel.users[0]
+                val context = requireActivity()
+                model.shareList(key,context)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

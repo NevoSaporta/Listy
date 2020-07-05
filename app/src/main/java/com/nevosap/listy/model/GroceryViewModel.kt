@@ -1,5 +1,6 @@
 package com.nevosap.listy.model
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -118,6 +119,10 @@ class GroceryViewModel:ViewModel() {
     }
     fun deleteList(groceryListModel: GroceryListModel){
         repository.deleteList(groceryListModel)
+        navigateHome()
+    }
+    fun shareList(key:String , context: Context){
+        repository.shareList(key, context)
         navigateHome()
     }
 }

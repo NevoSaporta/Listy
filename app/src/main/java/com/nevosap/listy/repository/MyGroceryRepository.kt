@@ -212,8 +212,8 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
 
     override fun shareList(key: String,context :Context) {
          val builder = FirebaseDynamicLinks.getInstance().createDynamicLink()
-             .setLink(Uri.parse( "https://listyapp.page.link"))
-             .setDomainUriPrefix("https://listyapp.page.link")
+             .setLink(Uri.parse( "https://listyapp.page.link/?id=$key"))
+             .setDomainUriPrefix("https://listyapp.page.link/?id=$key")
 
          val link = builder.buildDynamicLink()
          val sendIntent = Intent()
