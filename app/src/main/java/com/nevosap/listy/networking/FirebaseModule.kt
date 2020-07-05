@@ -19,7 +19,10 @@ object FirebaseModule {
     val itemsRef = database.child(ITEMS_OBJECT_NAME)
     val listsRef = database.child(LISTS_OBJECT_NAME)
 
+    fun checkInit ()= this::user.isInitialized
+
     fun initUser(firebaseUser: FirebaseUser){
         user = firebaseUser
+
     }
 }
