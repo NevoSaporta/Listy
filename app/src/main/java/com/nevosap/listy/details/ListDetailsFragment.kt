@@ -35,7 +35,7 @@ class ListDetailsFragment:Fragment() {
         })
         model.navigateHome.observe(viewLifecycleOwner , Observer {
             if(it){
-                findNavController().navigate(ListDetailsFragmentDirections.actionListDetailsFragmentToHomeFragment2())
+                findNavController().navigate(ListDetailsFragmentDirections.actionListDetailsFragmentToHomeFragment2(null))
                 model.navigateHomeEnded()
             }
         })

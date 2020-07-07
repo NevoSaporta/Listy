@@ -45,7 +45,7 @@ class AddEditFragment:Fragment() {
         })
         model.navigateHome.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if(it){
-                findNavController().navigate(AddEditFragmentDirections.actionAddEditFragmentToHomeFragment())
+                findNavController().navigate(AddEditFragmentDirections.actionAddEditFragmentToHomeFragment(null))
                 model.navigateHomeEnded()
             }
         })
