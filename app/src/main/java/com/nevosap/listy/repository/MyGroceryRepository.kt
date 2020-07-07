@@ -224,6 +224,26 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
          context.startActivity(sendIntent)
     }
 
+    override fun addSharedList(key: String) {
+        FirebaseModule.listsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.hasChild(key)) {
+                    val model = listFromSnapshot(p0.child(key))
+                    //update list
+                    model.users.add(FirebaseModule.user.uid)
+                    val listValues = model.toMap()
+                    val childUpdates = HashMap<String, Any>()
+                    childUpdates["/${model.id.toString()+model.users[0]}"] = listValues
+                    FirebaseModule.listsRef.updateChildren(childUpdates)
+                }
+            }
+        })
+    }
+
     private fun deleteListInLocal(groceryListModel: GroceryListModel) {
         uiScope.launch {
             withContext(Dispatchers.IO) {

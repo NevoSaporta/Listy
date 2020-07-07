@@ -16,4 +16,6 @@ interface GroceryRepository {
     fun deleteList(groceryListModel: GroceryListModel)
 
     fun shareList(key: String,context : Context)
+
+    fun addSharedList(key:String)
 }
