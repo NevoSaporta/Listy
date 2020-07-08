@@ -3,17 +3,23 @@ package com.nevosap.listy.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Debug
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
+import com.nevosap.listy.MainActivity
 import com.nevosap.listy.R
+import com.nevosap.listy.databinding.FragmentDetailsBindingImpl
 import com.nevosap.listy.databinding.FragmentHomeBinding
+import com.nevosap.listy.details.ListDetailsFragmentArgs
 import com.nevosap.listy.model.GroceryViewModel
 
 
@@ -29,6 +35,10 @@ class HomeFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val args :HomeFragmentArgs by navArgs()
+        args.linkKey?.let {
+
+        }
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,container,false)
         binding.groceryViewModel = model
         adapter  = GroceryListAdapter(model, requireContext())
