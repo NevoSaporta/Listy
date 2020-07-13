@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nevosap.listy.ListDialogListener
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentDetailsBinding
 import com.nevosap.listy.home.HomeFragment
@@ -59,7 +60,7 @@ class ListDetailsFragment:Fragment() {
             }
             R.id.delete_menu_item ->{
                 val dialog = DeleteListDialogFragment(object :
-                    DeleteListDialogListener {
+                    ListDialogListener {
                     override fun onPositiveClicked() {
                         model.deleteList(groceryListModel)
                     }

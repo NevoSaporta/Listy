@@ -37,7 +37,7 @@ class HomeFragment:Fragment() {
     ): View? {
         val args :HomeFragmentArgs by navArgs()
         args.linkKey?.let {
-
+            
         }
         val binding: FragmentHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,container,false)
         binding.groceryViewModel = model

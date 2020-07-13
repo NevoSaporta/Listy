@@ -5,9 +5,10 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import com.nevosap.listy.ListDialogListener
 import com.nevosap.listy.R
 
-class DeleteListDialogFragment(private val listenerDeleteList: DeleteListDialogListener):DialogFragment() {
+class DeleteListDialogFragment(private val listenerList: ListDialogListener):DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             // Use the Builder class for convenient dialog construction
@@ -16,11 +17,11 @@ class DeleteListDialogFragment(private val listenerDeleteList: DeleteListDialogL
                 .setMessage(R.string.delete_dialog_Message)
                 .setPositiveButton(R.string.delete_dialog_positive,
                     DialogInterface.OnClickListener{ dialog, id ->
-                        listenerDeleteList.onPositiveClicked()
+                        listenerList.onPositiveClicked()
                     })
                 .setNegativeButton(R.string.delete_dialog_negative,
                     DialogInterface.OnClickListener { dialog, id ->
-                        listenerDeleteList.onNegativeClicked()
+                        listenerList.onNegativeClicked()
                     })
             // Create the AlertDialog object and return it
             builder.create()
