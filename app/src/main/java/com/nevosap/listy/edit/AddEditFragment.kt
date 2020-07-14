@@ -1,6 +1,7 @@
 package com.nevosap.listy.edit
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +69,7 @@ class AddEditFragment:Fragment() {
             } else {
                 GroceryListModel(
                     groceryListModel!!.id, binding.editListName.text.toString(),
-                    groceryListModel!!.creationDate, adapter.getOrders()
+                    groceryListModel!!.creationDate, adapter.getOrders(),groceryListModel!!.users
                 )
             }
             model.addOrUpdateList(groceryListModel!!)

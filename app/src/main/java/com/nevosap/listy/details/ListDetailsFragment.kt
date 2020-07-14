@@ -1,6 +1,7 @@
 package com.nevosap.listy.details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment

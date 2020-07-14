@@ -3,7 +3,7 @@ package com.nevosap.listy.repository
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.core.content.ContextCompat.startActivity
+import android.util.Log
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -174,7 +174,7 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                val listKey = groceryListModel.id.toString()+FirebaseModule.user.uid
+                val listKey = groceryListModel.id.toString()+groceryListModel.users[0]
                 if (p0.hasChild(listKey)) {
                     //update list
                     val listValues = groceryListModel.toMap()
@@ -198,7 +198,6 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
                 lists.removeAll{
                         !it.users.contains(FirebaseModule.user.uid)
                     }
-                //adding list with the auto generated key
                 updateListInRemoteDB(GroceryListModel(id.toInt(),groceryListModel.name,groceryListModel.creationDate,groceryListModel.orders,groceryListModel.users))
                 listRepositoryListener.onSuccess(lists)
             }
@@ -233,15 +232,16 @@ class MyGroceryRepository (private val listRepositoryListener: RepositoyListener
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.hasChild(key)) {
                     val model = listFromSnapshot(p0.child(key))
-                    //update list
                     model.users.add(FirebaseModule.user.uid)
                     val listValues = model.toMap()
                     val childUpdates = HashMap<String, Any>()
-                    childUpdates["/${model.id.toString()+model.users[0]}"] = listValues
+                    childUpdates["/$key"] = listValues
                     FirebaseModule.listsRef.updateChildren(childUpdates)
+                    updateListInLocalDB(model, listRepositoryListener)
                 }
             }
         })
+
     }
 
     private fun deleteListInLocal(groceryListModel: GroceryListModel) {

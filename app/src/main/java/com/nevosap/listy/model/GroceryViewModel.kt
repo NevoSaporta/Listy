@@ -127,6 +127,6 @@ class GroceryViewModel:ViewModel() {
     }
     fun addSharedList(key: String){
         repository.addSharedList(key)
-        repository.getAllLists()
+//        repository.getAllLists()
     }
 }
