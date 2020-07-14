@@ -1,14 +1,15 @@
 package com.nevosap.listy.details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nevosap.listy.ListDialogListener
 import com.nevosap.listy.R
 import com.nevosap.listy.databinding.FragmentDetailsBinding
 import com.nevosap.listy.home.HomeFragment
@@ -36,7 +37,7 @@ class ListDetailsFragment:Fragment() {
         })
         model.navigateHome.observe(viewLifecycleOwner , Observer {
             if(it){
-                findNavController().navigate(ListDetailsFragmentDirections.actionListDetailsFragmentToHomeFragment2())
+                findNavController().navigate(ListDetailsFragmentDirections.actionListDetailsFragmentToHomeFragment2(null))
                 model.navigateHomeEnded()
             }
         })
@@ -48,7 +49,7 @@ class ListDetailsFragment:Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.details_menu,menu)
+        inflater.inflate(R.menu.fragment_details_menu,menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -60,7 +61,7 @@ class ListDetailsFragment:Fragment() {
             }
             R.id.delete_menu_item ->{
                 val dialog = DeleteListDialogFragment(object :
-                    DeleteListDialogListener {
+                    ListDialogListener {
                     override fun onPositiveClicked() {
                         model.deleteList(groceryListModel)
                     }
@@ -69,6 +70,12 @@ class ListDetailsFragment:Fragment() {
                     }
                 })
                 dialog.show(childFragmentManager,ListDetailsFragment::class.java.name)
+                true
+            }
+            R.id.share_menu_item ->{
+                val key = groceryListModel.id.toString()+groceryListModel.users[0]
+                val context = requireActivity()
+                model.shareList(key,context)
                 true
             }
             else -> super.onOptionsItemSelected(item)

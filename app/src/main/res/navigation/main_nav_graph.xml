@@ -13,6 +13,10 @@
         <action
             android:id="@+id/action_homeFragment_to_addEditFragment"
             app:destination="@id/addEditFragment" />
+        <argument
+            android:name="linkKey"
+            app:argType="string"
+            app:nullable="true"/>
     </fragment>
     <fragment
         android:id="@+id/listDetailsFragment"
