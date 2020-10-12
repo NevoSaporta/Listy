@@ -31,12 +31,6 @@ class SelectQuantityDialogFragment(
             val view = inflater.inflate(R.layout.dialog_quantity_edit,null)
             view.quantity_picker.minValue= MINSIZE
             view.quantity_picker.maxValue= MAXSIZE
-            view.increase_btn.setOnClickListener {
-                view.quantity_picker.value++
-            }
-            view.decrease_btn.setOnClickListener {
-                view.quantity_picker.value--
-            }
             builder.setTitle(R.string.quantity_dialog_title)
                 .setView(view)
                 .setPositiveButton(R.string.quantity_dialog_positive,
