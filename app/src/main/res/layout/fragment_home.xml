@@ -21,10 +21,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/regular_margin"
-            android:src="@drawable/ic_add_circle"
+            android:onClick="@{()->groceryViewModel.newListPressed()}"
+            android:src="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{()->groceryViewModel.newListPressed()}"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
