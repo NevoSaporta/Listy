@@ -36,11 +36,13 @@ class SelectQuantityDialogFragment(
                 .setPositiveButton(R.string.quantity_dialog_positive,
                     DialogInterface.OnClickListener{ dialog, id ->
                         orderModel =GroceryItemOrderModel((orderModel.id),orderModel.item,view.quantity_picker.value)
+                        orders?.add(orderModel)
                     })
                 .setNegativeButton(R.string.quantity_dialog_negative,
                     DialogInterface.OnClickListener { dialog, id ->
                     orderModel =GroceryItemOrderModel((orderModel.id),orderModel.item, MINSIZE)
-                })
+                        orders?.add(orderModel)
+                    })
             // Create the AlertDialog object and return it
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -48,8 +50,7 @@ class SelectQuantityDialogFragment(
 
     override fun onDismiss(dialog: DialogInterface) {
         //updating the order's quantity
-        orders.add(orderModel)
         binding.itemQuantity.text = orderModel.quantity.toString()
-        binding.itemQuantity.visibility = View.VISIBLE
+        binding.executePendingBindings()
     }
 }
