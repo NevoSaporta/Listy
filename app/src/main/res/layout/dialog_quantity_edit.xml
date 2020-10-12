@@ -5,10 +5,11 @@
 
     <ImageButton
         android:id="@+id/increase_btn"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:src="@android:drawable/ic_menu_upload_you_tube" />
+        android:src="@drawable/ic_arrow_upward" />
     <NumberPicker
         android:id="@+id/quantity_picker"
         android:layout_width="wrap_content"
@@ -17,8 +18,9 @@
 
     <ImageButton
         android:id="@+id/decrease_btn"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:src="@android:drawable/stat_sys_download" />
+        android:src="@drawable/ic_arrow_downward" />
 </LinearLayout>

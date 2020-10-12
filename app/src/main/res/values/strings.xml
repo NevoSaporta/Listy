@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Listy</string>
     <string name="hello_world_string">Hello World!</string>
-    <string name="list_item_date_format">Created on  %1$s</string>
+    <string name="list_item_date_format">Created: %1$s</string>
     <string name="list_item_quantity_format">Quantity:  %1$s</string>
     <string name="list_name_edit_hint">Enter a list name</string>
     <string name="cancel_edit_button">Cancel</string>
