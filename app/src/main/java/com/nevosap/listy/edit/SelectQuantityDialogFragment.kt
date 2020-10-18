@@ -31,22 +31,18 @@ class SelectQuantityDialogFragment(
             val view = inflater.inflate(R.layout.dialog_quantity_edit,null)
             view.quantity_picker.minValue= MINSIZE
             view.quantity_picker.maxValue= MAXSIZE
-            view.increase_btn.setOnClickListener {
-                view.quantity_picker.value++
-            }
-            view.decrease_btn.setOnClickListener {
-                view.quantity_picker.value--
-            }
             builder.setTitle(R.string.quantity_dialog_title)
                 .setView(view)
                 .setPositiveButton(R.string.quantity_dialog_positive,
                     DialogInterface.OnClickListener{ dialog, id ->
                         orderModel =GroceryItemOrderModel((orderModel.id),orderModel.item,view.quantity_picker.value)
+                        orders?.add(orderModel)
                     })
                 .setNegativeButton(R.string.quantity_dialog_negative,
                     DialogInterface.OnClickListener { dialog, id ->
                     orderModel =GroceryItemOrderModel((orderModel.id),orderModel.item, MINSIZE)
-                })
+                        orders?.add(orderModel)
+                    })
             // Create the AlertDialog object and return it
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
@@ -54,8 +50,7 @@ class SelectQuantityDialogFragment(
 
     override fun onDismiss(dialog: DialogInterface) {
         //updating the order's quantity
-        orders.add(orderModel)
         binding.itemQuantity.text = orderModel.quantity.toString()
-        binding.itemQuantity.visibility = View.VISIBLE
+        binding.executePendingBindings()
     }
 }

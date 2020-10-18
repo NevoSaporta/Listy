@@ -23,7 +23,9 @@
         android:id="@+id/edit_rcv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/recycler_view_height"
+        android:layout_marginBottom="@dimen/regular_margin"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_list_name"
         tools:listitem="@layout/list_item_grocery_edit"/>
     <Button
         android:id="@+id/cancel_edit_btn"

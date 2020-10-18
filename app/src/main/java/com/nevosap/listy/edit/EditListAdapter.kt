@@ -58,20 +58,21 @@ class EditListAdapter(context: Context,private var orders:MutableList<GroceryIte
 
         private fun onClick(groceryItemModel: GroceryItemModel) {
             if (binding.itemSelected.isChecked) {
-                val order = orders?.first { it.id == groceryItemModel.id }
+                val order = orders?.first { it.item.id == groceryItemModel.id }
                 orders?.remove(order)
                 binding.itemQuantity.visibility = View.INVISIBLE
             } else {
-                if (null == orders) {
+                if (orders.isNullOrEmpty()) {
                     orders = mutableListOf()
                 }
-                val order =GroceryItemOrderModel(groceryItemModel.id, groceryItemModel, 1)
+                val order =GroceryItemOrderModel(id =groceryItemModel.id, item = groceryItemModel, quantity = 1)
+                binding.itemQuantity.text = order.quantity.toString()
+                binding.itemQuantity.visibility = View.VISIBLE
                 val quantityDialogFragment = SelectQuantityDialogFragment(order, orders!!,binding)
                 quantityDialogFragment.show(fragmentManager,EditListAdapter::class.java.name)
-
             }
-            binding.itemSelected.isChecked = !binding.itemSelected.isChecked
-            notifyDataSetChanged()
+            binding.itemSelected.isChecked = !(binding.itemSelected.isChecked)
+            binding.executePendingBindings()
         }
     }
 
